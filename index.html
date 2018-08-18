@@ -1,3 +1,248 @@
-<html>
-    <h1>"hello cruel world"</h1>
+<!DOCTYPE html>
+<html dir="rtl" lang="he-il">
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<body>
+<div ng-app="myApp" ng-controller="myCtrl">
+    <div ng-if="!displayTest &&!doneIt">
+        <h1>מטלת פלנקר</h1>
+        <p> במסגרת עבודת הסמינר בנושא מוח וקוגניציה באוניבריסטה הפתוחה, הנכם מוזמנים להשתתף במחקר העוסק ביכולת לדכא תגובה ...</p>
+        <h2>שאלון דמוגרפי</h2>
+        מגדר:
+        <form>
+            <input type="radio" name="gender" ng-model="details.gender" value="male" > זכר<br>
+            <input type="radio" name="gender" ng-model="details.gender" value="female"> נקבה<br>
+            <input type="radio" name="gender" ng-model="details.gender" value="other"> אחר
+        </form> <br>
+
+        גיל: <input type="text" name="age"  ng-model=details.age><br>
+        <p>האם אובחנת בעבר בליקוי למידה כלשהו? </p>
+        <form>
+            <input type="radio" name="learningDisabilities" ng-model="details.learningDisabilities" value="true" > כן<br>
+            <input type="radio" name="learningDisabilities" ng-model="details.learningDisabilities" value="false"> לא<br>
+        </form>
+
+        <p>בלחיצה על התחל, הנכם מאשרים כי אתם מעל גיל 18, וכי אתם מסכימים להשתתף במחקר. במידה ואתם מעוניינים להפסיק, תוכלו לסגור את החלון בכל שלב ונתוניכם לא יישמרו </p>
+        <button type="submit"  value="Submit" ng-click="formSubmit()">התחילו!</button>
+    </div>
+    <div ng-if="displayTest && !doneIt">
+        <div ng-if="currentRound.status=='init'" style="position: absolute; top:20%; left: 50% ">
+            <p style="font-size: 7em; font-family:'Comic Sans MS' ">+</p>
+        </div>
+        <div ng-if="currentRound.status=='flanker'" style="position: absolute; display: inline-block; top:20%; left: 40%; font-size: 5em; ">
+
+        {{currentRound.flanker}}
+        {{currentRound.flanker}}
+        {{currentRound.flanker}}
+        <br>
+        {{currentRound.flanker}}
+        +
+        {{currentRound.flanker}}
+        <br>
+        {{currentRound.flanker}}
+        {{currentRound.flanker}}
+        {{currentRound.flanker}}
+
+    </div>
+        <div ng-if="currentRound.status=='target'" style="position: absolute; display: inline-block; top:20%; left: 40%; font-size: 5em; ">
+
+            {{currentRound.flanker}}
+            {{currentRound.flanker}}
+            {{currentRound.flanker}}
+            <br>
+            {{currentRound.flanker}}
+            {{currentRound.target}}
+            {{currentRound.flanker}}
+            <br>
+            {{currentRound.flanker}}
+            {{currentRound.flanker}}
+            {{currentRound.flanker}}
+            <div ng-if="currentRound.mobile==true" >
+                <div class="btn-group">
+                    <button>R</button>
+                    <button>H</button>
+                </div>
+            </div>
+
+        </div>
+        <div ng-if="currentRound.status=='answer'" style="position: absolute; display: inline-block; top:20%; right: 40%; font-size: 2em; ">
+            <div ng-if="currentRound.mobile==true" >
+                <div class="btn-group">
+                    <button>R</button>
+                    <button>H</button>
+                </div>
+            </div>
+            <div ng-if="details.mobile==false" >
+                הקלידו את תשובתכם
+                <br>
+                {{currentRound.message}}
+            </div>
+
+        </div>
+        <div ng-if="currentRound.status=='done'" style="position: absolute; display: inline-block; top:20%; right: 40%; font-size: 2em; ">
+                {{currentRound.message}}
+        </div>
+
+
+
+    </div>
+
+    <div ng-if="doneIt==true" style="position: absolute; display: inline-block; top:20%; right: 40%; font-size: 2em; ">
+        תודה על השתתפותכם בניסוי!
+    </div>
+
+</div>
+
+<script>
+
+
+    function registerToKeyPress(functionToActivate) {
+        $(document).removeAttr('keyPress');
+        $(document).keypress(functionToActivate);
+    };
+    function registerToKeyUp(functionToActivate) {
+        $(document).removeAttr('keyup');
+        $(document).keyup(functionToActivate);
+    };
+
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope,$http,$timeout) {
+        $scope.details={
+            mobile: false,
+            round:0,
+            done:false
+
+        };
+        $scope.doneIt=false;
+        $scope.displayTest=true;
+        $scope.currentRound;
+        $scope.rounds=[{
+            startTime: new Date(),
+            target:'H',
+            flanker:'R',
+            status:"init",
+            message:"",
+            reAction:false,
+            clicks:[]
+        },
+            {
+                startTime: new Date(),
+                target:'H',
+                flanker:'R',
+                status:"init",
+                message:"",
+                reAction:false,
+                clicks:[]
+            },
+            {
+                startTime: new Date(),
+                target:'H',
+                flanker:'R',
+                status:"init",
+                message:"",
+                reAction:false,
+                clicks:[]
+            }];
+
+
+        $scope.formSubmit= function () {
+          console.log($scope.details);
+          $scope.displayTest=true;
+        };
+        $scope.roundNum=0;
+
+
+
+
+        $scope.addNewRound=function () {
+            console.log("addNewRound",$scope.roundNum,$scope.currentRound);
+
+            if ($scope.rounds[$scope.roundNum].status!='done') {
+                if ($scope.currentRound && ($scope.rounds[$scope.roundNum]!=$scope.currentRound)) {
+                    return;
+                }
+            }
+            else {
+                $scope.roundNum++;
+            }
+            if($scope.roundNum==$scope.rounds.length){
+                $scope.doneIt=true;
+                $scope.details.done=true;
+            }
+            else {
+                $scope.currentRound = $scope.rounds[$scope.roundNum];
+                $timeout($scope.updateStatus, 1000);
+
+            }
+
+
+        };
+
+        $scope.addMessage= function(){
+            var now=  new Date();
+            console.log(now-$scope.currentRound.startTime);
+            if(now-$scope.currentRound.startTime>0 ){
+                $scope.currentRound.message="מהרו!";
+            }
+        };
+        $scope.addClicks= function(e){
+            click={};
+            click.k= String.fromCharCode(e.charCode);
+            click.timePress= new Date();
+            $scope.currentRound.clicks.push(click);
+        };
+        $scope.updateClicks= function(e){
+            click= $scope.currentRound.clicks[ $scope.currentRound.clicks.length-1];
+            click.timeUp= new Date();
+            click.timePressed = click.timeUp-click.timePress;
+            console.log($scope.currentRound.clicks);
+        };
+        $scope.getAnswer= function(e) {
+            console.log("testing");
+            $scope.addClicks(e);
+            $scope.addMessage();
+            $scope.$apply();
+        };
+        $scope.updateAnswer= function(e) {
+            console.log("testing");
+            $scope.updateClicks(e);
+            $scope.$apply();
+        };
+        $scope.updateStatus=function(){
+            console.log("updating status for:",$scope.roundNum,$scope.currentRound.status);
+            if($scope.currentRound.status=='init'){
+                $scope.currentRound.status='flanker';
+                $timeout($scope.updateStatus,500);
+            }
+            else if($scope.currentRound.status=='flanker'){
+                $scope.currentRound.status='target';
+                $timeout($scope.updateStatus,500);
+            }
+            else if($scope.currentRound.status=='target'){
+                $scope.currentRound.status='answer';
+                $timeout($scope.updateStatus,1000);
+            }
+            else if($scope.currentRound.status=='answer'){
+                if ($scope.currentRound.clicks.length>0) {
+                    $scope.currentRound.status='done';
+                    $timeout($scope.updateStatus,1000);
+                }
+                else {
+                    $timeout($scope.updateStatus,1000);
+                }
+            }
+            else if($scope.currentRound.status=='done'){
+                $scope.addNewRound();
+            }
+
+        };
+        registerToKeyPress($scope.getAnswer);
+        registerToKeyUp($scope.updateAnswer);
+        $scope.addNewRound();
+
+
+    });
+</script>
+
+</body>
 </html>
