@@ -9,13 +9,13 @@
         <p> במסגרת עבודת הסמינר בנושא מוח וקוגניציה באוניבריסטה הפתוחה, הנכם מוזמנים להשתתף במחקר העוסק ביכולת לדכא תגובה ...</p>
         <h2>שאלון דמוגרפי</h2>
         מגדר:
-        <form>
+        <form required>
             <input type="radio" name="gender" ng-model="details.gender" value="male" > זכר<br>
             <input type="radio" name="gender" ng-model="details.gender" value="female"> נקבה<br>
             <input type="radio" name="gender" ng-model="details.gender" value="other"> אחר
         </form> <br>
 
-        גיל: <input type="text" name="age"  ng-model=details.age><br>
+        גיל: <input type="number" name="age" ng-model="details.age" value="1" min="18" max="100" required><br>
         <p>האם אובחנת בעבר בליקוי למידה כלשהו? </p>
         <form>
             <input type="radio" name="learningDisabilities" ng-model="details.learningDisabilities" value="true" > כן<br>
@@ -23,6 +23,7 @@
         </form>
 
         <p>בלחיצה על התחל, הנכם מאשרים כי אתם מעל גיל 18, וכי אתם מסכימים להשתתף במחקר. במידה ואתם מעוניינים להפסיק, תוכלו לסגור את החלון בכל שלב ונתוניכם לא יישמרו </p>
+        <div style="color: red">{{warningsData}}</div>
         <button type="submit"  value="Submit" ng-click="formSubmit()">התחילו!</button>
     </div>
     <div ng-if="displayTest && !doneIt">
@@ -107,6 +108,9 @@
 
     var app = angular.module('myApp', []);
     app.controller('myCtrl', function($scope,$http,$timeout) {
+
+
+
         $scope.details={
             mobile: false,
             round:0,
@@ -114,7 +118,9 @@
 
         };
         $scope.doneIt=false;
-        $scope.displayTest=true;
+        $scope.warningsData="";
+
+        $scope.displayTest=false;
         $scope.currentRound;
         $scope.rounds=[{
             startTime: new Date(),
@@ -147,9 +153,34 @@
 
         $scope.formSubmit= function () {
           console.log($scope.details);
-          $scope.displayTest=true;
+          $scope.detailsValidation();
+
         };
         $scope.roundNum=0;
+        $scope.detailsValidation=function(){
+            if($scope.details.gender!=null){
+                if($scope.details.learningDisabilities!=null){
+
+                        if($scope.details.age>=18){
+                            $scope.displayTest=true;
+                            $scope.addNewRound();
+                            registerToKeyPress($scope.getAnswer);
+                            registerToKeyUp($scope.updateAnswer);
+                        }
+                        else {
+                            $scope.warningsData="לא הוזן גיל, או שהוזן גיל הקטן מ-18 ";
+                    }
+
+
+
+            }  else {
+                    $scope.warningsData="יש לענות על כל השאלות";
+                }
+            } else {
+                $scope.warningsData="יש לענות על כל השאלות";
+            }
+        }
+
 
 
 
@@ -168,6 +199,10 @@
             if($scope.roundNum==$scope.rounds.length){
                 $scope.doneIt=true;
                 $scope.details.done=true;
+                $http.post('results',
+                    {demographic_details:$scope.details,
+                        test:$scope.rounds
+                });
             }
             else {
                 $scope.currentRound = $scope.rounds[$scope.roundNum];
@@ -236,9 +271,6 @@
             }
 
         };
-        registerToKeyPress($scope.getAnswer);
-        registerToKeyUp($scope.updateAnswer);
-        $scope.addNewRound();
 
 
     });
