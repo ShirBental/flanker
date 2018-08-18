@@ -167,6 +167,7 @@
         $scope.displayTest=false;
         $scope.dataV=true;
         $scope.roundNum=0;
+        $scope.fasterText="מהרו!";
 
         /****Functions*****/
         $scope.formSubmit= function () {
@@ -175,7 +176,7 @@
 
         };
         $scope.mobileOrNot=function(){
-            if(window.innerWidth<=800){
+            if(window.innerWidth<=600){
                 $scope.details.mobile=true;
                 console.log("mobile");
             }
@@ -239,7 +240,7 @@
             var now=  new Date();
             console.log(now-$scope.currentRound.startTime);
             if(now-$scope.currentRound.startTime>0 ){
-                $scope.currentRound.message="מהרו!";
+                $scope.currentRound.message=$scope.fasterText;
             }
         };
         $scope.addClicks= function(someChar){
@@ -263,6 +264,11 @@
             $scope.updateClicks();
             $scope.$apply();
         };
+
+        $scope.initTime=500;
+        $scope.flankerTime=500;
+        $scope.targetTime=1000;
+        $scope.answer=1000;
         $scope.updateStatus=function(){
             console.log("updating status for:",$scope.roundNum,$scope.currentRound.status);
             if($scope.currentRound.status=='init'){
