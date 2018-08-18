@@ -2,6 +2,7 @@
 <html dir="rtl" lang="he-il">
 <script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <body>
 <div ng-app="myApp" ng-controller="myCtrl">
     <div ng-if="!displayTest &&!doneIt">
@@ -28,9 +29,9 @@
     </div>
     <div ng-if="displayTest && !doneIt">
         <div ng-if="currentRound.status=='init'" style="position: absolute; top:20%; left: 50% ">
-            <p style="font-size: 7em; font-family:'Comic Sans MS' ">+</p>
+            <p style="font-size: 2em; font-family:'Comic Sans MS' ">+</p>
         </div>
-        <div ng-if="currentRound.status=='flanker'" style="position: absolute; display: inline-block; top:20%; left: 40%; font-size: 5em; ">
+        <div ng-if="currentRound.status=='flanker'" style="position: absolute; display: inline-block; top:20%; left: 40%; font-size: 2em; ">
 
         {{currentRound.flanker}}
         {{currentRound.flanker}}
@@ -45,7 +46,7 @@
         {{currentRound.flanker}}
 
     </div>
-        <div ng-if="currentRound.status=='target'" style="position: absolute; display: inline-block; top:20%; left: 40%; font-size: 5em; ">
+        <div ng-if="currentRound.status=='target'" style="position: absolute; display: inline-block; top:20%; left: 40%; font-size: 2em; ">
 
             {{currentRound.flanker}}
             {{currentRound.flanker}}
@@ -66,11 +67,13 @@
             </div>
 
         </div>
-        <div ng-if="currentRound.status=='answer'" style="position: absolute; display: inline-block; top:20%; right: 40%; font-size: 2em; ">
-            <div ng-if="currentRound.mobile==true" >
-                <div class="btn-group">
-                    <button>R</button>
-                    <button>H</button>
+        <div ng-if="currentRound.status=='answer'" style="position: absolute; display: inline-block; top:20%;  font-size: 2em; ">
+            <div ng-if="details.mobile==true" style="width:100%" >
+                <div class="btn-group" style="width:100%" >
+                    הקלידו את תשובתכם
+                    <br>
+                    <button style="width:40%" ontouchstart="onTouchEvent('r')" >R</button>
+                    <button style="width:40%" ontouchstart="onTouchEvent('h')">H</button>
                 </div>
             </div>
             <div ng-if="details.mobile==false" >
@@ -80,7 +83,7 @@
             </div>
 
         </div>
-        <div ng-if="currentRound.status=='done'" style="position: absolute; display: inline-block; top:20%; right: 40%; font-size: 2em; ">
+        <div ng-if="currentRound.status=='done'" style="position: absolute; display: inline-block; top:20%;  font-size: 2em; ">
                 {{currentRound.message}}
         </div>
 
@@ -105,22 +108,31 @@
         $(document).removeAttr('keyup');
         $(document).keyup(functionToActivate);
     };
+    function registerToTouchEnd(functionToActivate) {
+        $(document).removeAttr('touchend');
+        $(document).bind('touchend',functionToActivate);
+    };
+
+    var forTouchPromise;
+    function onTouchEvent(someChar) {
+        forTouchPromise(someChar);
+    }
+    /*function registerToTouchEnd(element, functionToActivate) {
+        element.removeAttr('touchend');
+        element.bind('touchend',functionToActivate);
+    };*/
+
+
 
     var app = angular.module('myApp', []);
     app.controller('myCtrl', function($scope,$http,$timeout) {
-
-
-
+        /****Arrays*****/
         $scope.details={
             mobile: false,
             round:0,
             done:false
 
         };
-        $scope.doneIt=false;
-        $scope.warningsData="";
-
-        $scope.displayTest=false;
         $scope.currentRound;
         $scope.rounds=[{
             startTime: new Date(),
@@ -149,29 +161,45 @@
                 reAction:false,
                 clicks:[]
             }];
+        /****Varibles*****/
+        $scope.doneIt=false;
+        $scope.warningsData="";
+        $scope.displayTest=false;
+        $scope.dataV=true;
+        $scope.roundNum=0;
 
-
+        /****Functions*****/
         $scope.formSubmit= function () {
           console.log($scope.details);
           $scope.detailsValidation();
 
         };
-        $scope.roundNum=0;
+        $scope.mobileOrNot=function(){
+            if(window.innerWidth<=800){
+                $scope.details.mobile=true;
+                console.log("mobile");
+            }
+
+        }
+        $scope.startUpdate=function(){
+           if($scope.dataV){
+               $scope.displayTest=true;
+               $scope.addNewRound();
+               registerToKeyPress($scope.getAnswer);
+               registerToKeyUp($scope.updateAnswer);
+               registerToTouchEnd($scope.updateAnswer);
+           }
+        }
         $scope.detailsValidation=function(){
             if($scope.details.gender!=null){
                 if($scope.details.learningDisabilities!=null){
-
                         if($scope.details.age>=18){
-                            $scope.displayTest=true;
-                            $scope.addNewRound();
-                            registerToKeyPress($scope.getAnswer);
-                            registerToKeyUp($scope.updateAnswer);
+                           $scope.dataV=true;
+                           $scope.startUpdate();
                         }
                         else {
                             $scope.warningsData="לא הוזן גיל, או שהוזן גיל הקטן מ-18 ";
                     }
-
-
 
             }  else {
                     $scope.warningsData="יש לענות על כל השאלות";
@@ -180,11 +208,6 @@
                 $scope.warningsData="יש לענות על כל השאלות";
             }
         }
-
-
-
-
-
         $scope.addNewRound=function () {
             console.log("addNewRound",$scope.roundNum,$scope.currentRound);
 
@@ -212,7 +235,6 @@
 
 
         };
-
         $scope.addMessage= function(){
             var now=  new Date();
             console.log(now-$scope.currentRound.startTime);
@@ -220,27 +242,25 @@
                 $scope.currentRound.message="מהרו!";
             }
         };
-        $scope.addClicks= function(e){
+        $scope.addClicks= function(someChar){
             click={};
-            click.k= String.fromCharCode(e.charCode);
+            click.k= someChar;
             click.timePress= new Date();
             $scope.currentRound.clicks.push(click);
+            $scope.addMessage();
         };
-        $scope.updateClicks= function(e){
+        $scope.updateClicks= function(){
             click= $scope.currentRound.clicks[ $scope.currentRound.clicks.length-1];
             click.timeUp= new Date();
             click.timePressed = click.timeUp-click.timePress;
             console.log($scope.currentRound.clicks);
         };
         $scope.getAnswer= function(e) {
-            console.log("testing");
-            $scope.addClicks(e);
-            $scope.addMessage();
+            $scope.addClicks(String.fromCharCode(e.charCode));
             $scope.$apply();
         };
         $scope.updateAnswer= function(e) {
-            console.log("testing");
-            $scope.updateClicks(e);
+            $scope.updateClicks();
             $scope.$apply();
         };
         $scope.updateStatus=function(){
@@ -271,8 +291,13 @@
             }
 
         };
+        $scope.startUpdate();
+        $scope.mobileOrNot();
+        forTouchPromise = function() {
+            $scope.addClicks();
+            $scope.$apply();
 
-
+        };
     });
 </script>
 
