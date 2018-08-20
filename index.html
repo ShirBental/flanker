@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html lang="he">
-<meta charset="UTF-8">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="bower_components/bootstrap-rtl/dist/css/bootstrap-rtl.css">
+</head>
+
 
 <body>
-<div class="container" style="text-align: right">
+<div  style="text-align: right">
     <div ng-app="myApp" ng-controller="myCtrl">
-        <div ng-if="!displayTest &&!doneIt" >
+
+        <div class="container"  ng-if="!displayTest &&!doneIt"  >
             <br>
             <br>
             <h1 style="text-align:center; text-decoration: underline">מטלת פלנקר</h1>
@@ -52,7 +57,7 @@
             <div style="color: red">{{warningsData}}</div>
             <button  class="btn btn-primary btn-block" type="submit"  value="Submit" ng-click="formSubmit()">התחילו!</button>
         </div>
-        <div ng-if="displayTest && !doneIt">
+        <div class="container" ng-if="displayTest && !doneIt" >
             <div ng-if="currentRound.status=='init'" style="position: absolute; top:20%; left: 50% ">
                 <p style="font-size: 2em; font-family:'Comic Sans MS' ">+</p>
             </div>
@@ -116,7 +121,7 @@
 
         </div>
 
-        <div ng-if="doneIt==true" style="position: absolute; display: inline-block; top:20%; right: 40%; font-size: 2em; ">
+        <div class="container" ng-if="doneIt==true"  style=" position: absolute; display: inline-block; top:20%; right: 40%; font-size: 2em; ">
             תודה על השתתפותכם בניסוי!
         </div>
 
@@ -198,6 +203,7 @@
             $scope.dataV=false;
             $scope.roundNum=0;
             $scope.fasterText="מהרו!";
+            $scope.speedupTime=2000;
 
             $scope.initTime=500;
             $scope.flankerTime=500;
@@ -275,7 +281,7 @@
             $scope.addMessage= function(){
                 var now=  new Date();
                 console.log(now-$scope.currentRound.startTime);
-                if(now-$scope.currentRound.startTime>0 ){
+                if(now-$scope.currentRound.startTime>$scope.speedupTime){
                     $scope.currentRound.message=$scope.fasterText;
                 }
             };
@@ -291,7 +297,9 @@
                 $scope.addMessage();
             };
             $scope.updateClicks= function(){
+
                 click= $scope.currentRound.clicks[ $scope.currentRound.clicks.length-1];
+                if(!click) return;
                 click.timeUp= new Date();
                 click.timePressed = click.timeUp-click.timePress;
                 console.log($scope.currentRound.clicks);
@@ -317,6 +325,7 @@
                 }
                 else if($scope.currentRound.status=='target'){
                     $scope.currentRound.status='answer';
+                    $scope.currentRound.startTime=new Date();
                     $timeout($scope.updateStatus,$scope.targetTime);
                 }
                 else if($scope.currentRound.status=='answer'){
