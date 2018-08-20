@@ -35,7 +35,6 @@ var writeToFile=function(req,res) {
             finalString += currentClick.timePress + ',';
             finalString += currentClick.timeUp + ',';
             finalString += currentClick.timePressed + ',';
-            finalString += currentClick.timePressed + ',';
         }
     }
     finalString += 'End of data';

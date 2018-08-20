@@ -344,8 +344,8 @@
             };
             $scope.startUpdate();
             //$scope.mobileOrNot();
-            forTouchPromise = function() {
-                $scope.addClicks();
+            forTouchPromise = function(someChar) {
+                $scope.addClicks(someChar);
                 $scope.$apply();
 
             };
