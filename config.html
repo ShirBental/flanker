@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/bootstrap-rtl/dist/css/bootstrap-rtl.css">
+</head>
+
+
+<body>
+<div  style="text-align: right">
+    <div ng-app="myApp" ng-controller="myCtrl">
+        <p style="font-size: 2em">זמן לתגובה:</p>
+        <input  ng-model="config.answer"/><br>
+        <p style="font-size: 2em">זמן תיקון:</p>
+        <input  ng-model="config.checkAgainTime"/><br>
+        <p style="font-size: 2em">זמן עד להופעת גירוי מטרה:</p>
+        <input  ng-model="config.flankerTime"/><br>
+        <p style="font-size: 2em">זמן אתחול:</p>
+        <input  ng-model="config.initTime"/><br>
+        <p style="font-size: 2em">זמן עד למענה:</p>
+        <input  ng-model="config.targetTime"/><br>
+        <div id="rounds">
+            <div ng-repeat="round in config.rounds">
+                <h2>
+                סיבוב מספר
+                {{$index+1}}
+                </h2>
+                <p style="font-size: 2em">מטרה:</p>
+                <input  ng-model="round.target"/><br>
+                <p style="font-size: 2em">פלאנקר:</p>
+                <input  ng-model="round.flanker"/><br>
+                <button  class="btn btn-primary btn-danger" type="button"  value="X" ng-click="removeRound($index)">X</button>
+            </div>
+            <br/>
+            <button  class="btn btn-primary btn-primary" type="button"  value="הוסף" ng-click="addRound()">הוסף</button>
+
+        </div>
+        <br/>
+        <br/>
+        <button  class="btn btn-primary btn-primary" type="button"  value="שמור" ng-click="save()">שמור</button>
+    </div>
+</div>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function($scope,$http,$timeout) {
+            $http.get('configParams').then(function(data) {
+               $scope.config=data.data;
+               console.log(data.data);
+            });
+            $scope.removeRound=function(index) {
+                $scope.config.rounds.splice(index,1);
+            };
+            $scope.addRound=function() {
+                $scope.config.rounds.push({
+                    flanker:'R',
+                    target:'R',
+                    clicks:[],
+                    message:'',
+                    reAction:false,
+                    startTime:new Date(),
+                    status:'init'
+                });
+            };
+            $scope.save = function() {
+                $http.post('configParams',$scope.config);
+            };
+        });
+    </script>
+
+</body>
+</html>

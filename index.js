@@ -5,6 +5,74 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000
 const fs=require('fs');
 
+
+var configParams = {
+    initTime:500,
+    flankerTime:500,
+    targetTime:1000,
+    answer:1000,
+    checkAgainTime:1000,
+    rounds:[
+        {
+            startTime: new Date(),
+            target:'H',
+            flanker:'R',
+            status:"init",
+            message:"",
+            reAction:false,
+            clicks:[]
+        },
+        {
+            startTime: new Date(),
+            target:'H',
+            flanker:'R',
+            status:"init",
+            message:"",
+            reAction:false,
+            clicks:[]
+        },
+        {
+            startTime: new Date(),
+            target:'H',
+            flanker:'R',
+            status:"init",
+            message:"",
+            reAction:false,
+            clicks:[]
+        }
+    ]
+};
+
+var configFile='flankerConfig.json';
+function writeConfig() {
+    fs.writeFile(configFile,JSON.stringify(configParams));
+};
+function setConfig(req,res) {
+    console.log("in set config");
+    configParams=req.body;
+    writeConfig();
+    res.send('OK');
+};
+
+var loadConfig=function() {
+    fs.readFile(configFile,function(err,data) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            try {
+                configParams = JSON.parse(data);
+            }
+            catch(err) {
+                console.log('Failed loading JSON', err);
+            }
+
+        }
+    });
+
+};
+loadConfig();
+
 var resFile='data.csv';
 var writeToFile=function(req,res) {
     console.log(req,res);
@@ -19,6 +87,7 @@ var writeToFile=function(req,res) {
     finalString += output.demographic_details.mobile + ',';
     finalString += output.demographic_details.gender + ',';
     finalString += output.demographic_details.age + ',';
+    finalString += req.connection.remoteAddress + ',';
     finalString += output.demographic_details.learningDisabilities + ',';
     testData = output.test;
     for(var i=0; i<testData.length; i++) {
@@ -54,6 +123,11 @@ express()
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: true }))
 .get('/', (req, res) => res.sendFile(path.join(__dirname,'index.html')))
+    .get('/configPage', (req, res) => res.sendFile(path.join(__dirname,'config.html')))
+    .get('/configParams', (req, res) => {
+        res.send(JSON.stringify(configParams))
+    })
+    .post('/configParams', (req, res) => setConfig(req,res))
     .get('/download', function(req, res){
         res.download(resFile);
     })

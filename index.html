@@ -58,6 +58,7 @@
             <button  class="btn btn-primary btn-block" type="submit"  value="Submit" ng-click="formSubmit()">התחילו!</button>
         </div>
         <div class="container" ng-if="displayTest && !doneIt" >
+            <p style="font-size: 2em;background-color:{{(previousScore>=0) ? ((score>previousScore) ? 'green':'red') : 'white';}}">ניקודך {{score}}</p>
             <div ng-if="currentRound.status=='init'" style="position: absolute; top:20%; left: 50% ">
                 <p style="font-size: 2em; font-family:'Comic Sans MS' ">+</p>
             </div>
@@ -211,6 +212,18 @@
             $scope.answer=1000;
             $scope.checkAgainTime=1000;
 
+            $http.get('configParams').then(function(data) {
+                $scope.config=data.data;
+                if ($scope.config) {
+                    $scope.initTime=$scope.config.initTime;
+                    $scope.flankerTime=$scope.config.flankerTime;
+                    $scope.targetTime=$scope.config.targetTime;
+                    $scope.answer=$scope.config.answer;
+                    $scope.checkAgainTime=$scope.config.checkAgainTime;
+                    $scope.rounds = $scope.config.rounds;
+                }
+            });
+
             /****Functions*****/
             $scope.formSubmit= function () {
               console.log($scope.details);
@@ -338,6 +351,13 @@
                     }
                 }
                 else if($scope.currentRound.status=='done'){
+                    if ($scope.currentRound.clicks.length>0) {
+                        var lastClick = $scope.currentRound.clicks[$scope.currentRound.clicks.length-1];
+                        $scope.previousScore=$scope.score;
+                        if (lastClick.k.toLowerCase()==$scope.currentRound.target.toLowerCase()) {
+                            $scope.score++;
+                        }
+                    }
                     $scope.addNewRound();
                 }
 
@@ -349,6 +369,8 @@
                 $scope.$apply();
 
             };
+            $scope.previousScore=-1;
+            $scope.score = 0;
         });
     </script>
 
