@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="he">
 <head>
+    <title>מטלת פלנקר</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <script src="bower_components/angular/angular.min.js"></script>
@@ -16,34 +17,33 @@
 <div  style="text-align: right">
     <div ng-app="myApp" ng-controller="myCtrl">
 
-        <div class="container"  ng-if="!displayTest &&!doneIt"  >
+        <div class="container"  ng-if="!displayTest &&!doneIt&& !explain"  style="background:#f1f1f1;  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12) " >
             <br>
             <br>
-            <h1 style="text-align:center; text-decoration: underline">מטלת פלנקר</h1>
+            <div style="width: 80%; margin-right: 10%; padding: 5%">
+            <h1 style="text-align:center; text-decoration: underline">מטלת פלנקר </h1>
 
-            <h3> במסגרת עבודת הסמינר בנושא מוח וקוגניציה באוניבריסטה הפתוחה, הנכם מוזמנים להשתתף במחקר העוסק ביכולת לדכא תגובה ...</h3>
-            <button  class="btn" data-toggle="collapse" data-target="#aboutFlanker" style="background: white; font-size: 2em; border: white; text-decoration: underline; text-decoration-color:#00b3ee "><span class="glyphicon glyphicon-arrow-left"></span> על המטלה</button>
-            <div id="aboutFlanker" class="collapse">
-                מטלת פלנקר היא...
-            </div>
+            <h3 style="text-align: center"> תודה רבה על נכונותכם להשתתף במחקר</h3>
+            <h3 style="text-align: center"> המחקר נעשה במסגרת סמינר בתחום מוח וקוגניציה, ועוסק בניתוח מהירות ונכונות תגובות לאחר גירויים שונים. תוכלו להרחיב ולקרוא על המטלה בלחיצה על ההסבר בתחתית העמוד</h3>
+            <h3 style="text-align: center"> המחקר הינו אנונימי,ולא נאסף אודותיכם מידע נוסף</h3>
+<br>
             <br>
-            <button  class="btn" data-toggle="collapse" data-target="#demo" style="background: white; font-size: 2em; border: white; text-decoration: underline; text-decoration-color:#00b3ee  "><span class="glyphicon glyphicon-arrow-left"></span> על הניסוי</button>
-            <div id="demo" class="collapse">
-               משתתפים, מגיל...
-            </div>
-            <br>
-            <button  class="btn" data-toggle="collapse" data-target="#con" style="background: white; font-size: 2em; border: white; text-decoration: underline; text-decoration-color:#00b3ee "><span class="glyphicon glyphicon-arrow-left"></span> צרו קשר</button>
-            <div id="con" class="collapse">
-                משתתפים, מגיל...
-            </div>
-
-            <h2 style="text-align:center;">שאלון דמוגרפי</h2>
+                <div style="background: white; padding:5%;">
+            <h2 style="text-align:center; text-decoration-line: underline; ">שאלון דמוגרפי</h2>
             <p style="font-size: 2em">מגדר:</p>
             <form required style="font-size: 2em">
                 <input type="radio" name="gender" ng-model="details.gender" value="male"  > זכר<br>
                 <input type="radio" name="gender" ng-model="details.gender" value="female"> נקבה<br>
                 <input type="radio" name="gender" ng-model="details.gender" value="other"> אחר
             </form> <br>
+
+            <p style="font-size: 2em">השכלה:</p>
+            <form required style="font-size: 2em">
+                <input type="radio" name="education" ng-model="details.education" value="HighSchool"> השכלה תיכונית<br>
+                <input type="radio" name="education" ng-model="details.education" value="BA"> תואר ראשון<br>
+                <input type="radio" name="education" ng-model="details.education" value="MA"> תואר שני ומעלה
+            </form> <br>
+
 
             <p style="font-size: 2em">גיל:</p>
              <input type="number" name="age" ng-model="details.age" value="1" min="18" max="100" required><br>
@@ -55,60 +55,154 @@
 
             <p>בלחיצה על התחל, הנכם מאשרים כי אתם מעל גיל 18, וכי אתם מסכימים להשתתף במחקר. במידה ואתם מעוניינים להפסיק, תוכלו לסגור את החלון בכל שלב ונתוניכם לא יישמרו </p>
             <div style="color: red">{{warningsData}}</div>
-            <button  class="btn btn-primary btn-block" type="submit"  value="Submit" ng-click="formSubmit()">התחילו!</button>
-        </div>
-        <div class="container" ng-if="displayTest && !doneIt" >
-            <p style="font-size: 2em;background-color:{{(previousScore>=0) ? ((score>previousScore) ? 'green':'red') : 'white';}}">ניקודך {{score}}</p>
-            <div ng-if="currentRound.status=='init'" style="position: absolute; top:20%; left: 50% ">
-                <p style="font-size: 2em; font-family:'Comic Sans MS' ">+</p>
+            <button  class="btn btn-primary btn-block" type="submit"  value="Submit" ng-click="formSubmit()" style="font-size: 2em">המשיכו להוראות!</button>
+                </div>
+            <button  class="btn" data-toggle="collapse" data-target="#aboutFlanker" style="background:#f1f1f1; font-size: 2em; border: white; text-decoration: underline; text-decoration-color:#00b3ee "><span class="glyphicon glyphicon-arrow-left"></span> על המטלה</button>
+            <div id="aboutFlanker" class="collapse">
+                <h3>       מטלת פלנקר פורסמה לראשונה בשנת 1974 , על ידי אריקסן פלנקר. מטרתה היא להעריך את היכולת לעכב תגובות שגויה תוך בחינת היכולות הזו אל מול גירויים שונים.</h3>
+
+
             </div>
-            <div ng-if="currentRound.status=='flanker'" style="position: absolute; display: inline-block; top:20%; left: 40%; font-size: 2em; ">
-
-            {{currentRound.flanker}}
-            {{currentRound.flanker}}
-            {{currentRound.flanker}}
             <br>
-            {{currentRound.flanker}}
-            +
-            {{currentRound.flanker}}
-            <br>
-            {{currentRound.flanker}}
-            {{currentRound.flanker}}
-            {{currentRound.flanker}}
+            <button  class="btn" data-toggle="collapse" data-target="#demo" style="background:#f1f1f1; font-size: 2em; border: white; text-decoration: underline; text-decoration-color:#00b3ee  "><span class="glyphicon glyphicon-arrow-left"></span> על הניסוי</button>
+            <div id="demo" class="collapse">
+                <h3>       ניסוי זה נערך במסגרת סמינר במוח וקוגניציה במסגרת הלימודים לתואר ראשון באונברסיטה הפתוחה.</h3>
 
+            </div>
+            <br>
+            <button  class="btn" data-toggle="collapse" data-target="#con" style="background:#f1f1f1; font-size: 2em; border: white; text-decoration: underline; text-decoration-color:#00b3ee "><span class="glyphicon glyphicon-arrow-left"></span> צרו קשר</button>
+            <div id="con" class="collapse">
+                <h3>     ניתן לפנות אלי, שיר בנטל במייל
+                    <a href="Shir6Shir@gmail.com" target="_top">Shir6Shir@gmail.com</a></h3>
+
+
+            </div>
+            </div>
         </div>
-            <div ng-if="currentRound.status=='target'" style="position: absolute; display: inline-block; top:20%; left: 40%; font-size: 2em; ">
+        <div class="container" ng-if="!displayTest && !doneIt && explain">
+            <div style="width: 80%; margin-right: 10%; margin-top: 20%">
+                <h1> תודה רבה על ההשתתפות במחקר,</h1>
+                <br>
+                <h4>במהלך המשימה שאמורה לקחת כ 6 דקות, תבצע מטלת פלנקר בה יופיעו על המסך אותיות H או R כשעלייך לזהות את האות שנמצאת במרכז</h4>
+                <h4>לפני הופעת האותיות, יופיע סימן "מטרה" + היכן שהאות המרכזית תופיע כחצי שנייה לאחר מכן.</h4>
+                <h4>עליך לזהות את אות המטרה ולהגיב במהירות הגבוהה ביותר בלחיצה על המקש המתאים על המקלדת.</h4>
+                <h4>במידה וטעית בלחיצה, תוכל לתקן את בחירתך בלחיצה נוספת על המקש הנכון. גם זה צריך להתבצע בהקדם האפשרי,  לצורך התיקון יהיה חלון קצר של שנייה אחת בלבד.</h4>
+                <br>
+                <h2 style="font-style: oblique">ככל שתגובותייך יהיו מהירות יותר, כך הניקוד עליהן יהיה גבוה יותר. </h2>\
+                <h2> במקרה של תגובה שגויה, תתווסף לך עוד שאלה למניין השאלות.</h2>
+                <button  class="btn btn-primary btn-block" type="submit"  value="Submit" ng-click="startGame()" style="font-size: 2em">מוכנים? התחילו!</button>
 
-                {{currentRound.flanker}}
-                {{currentRound.flanker}}
-                {{currentRound.flanker}}
-                <br>
-                {{currentRound.flanker}}
-                {{currentRound.target}}
-                {{currentRound.flanker}}
-                <br>
-                {{currentRound.flanker}}
-                {{currentRound.flanker}}
-                {{currentRound.flanker}}
-                <div ng-if="currentRound.mobile==true" >
-                    <div class="btn-group">
-                        <button>R</button>
-                        <button>H</button>
+            </div>
+        </div>
+        <div class="container" ng-if="displayTest && !doneIt &&!explain" >
+
+
+            <div style="border-bottom: 1px solid gray;">
+
+            <p style="font-size: 2em;">ניקודך {{score}}</p>
+
+                <div class="progress">
+
+                    <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:{{((roundNum+1)/rounds.length)*100}}%;  animation: blink 1s steps(2, start) infinite; background: {{(previousScore>=0) ? ((score>previousScore) ? 'green':'red') : 'blue';}}">
+
+                        <span class="sr-only"></span>
                     </div>
                 </div>
-
             </div>
-            <div ng-if="currentRound.status=='answer'" style="position: absolute; display: inline-block; top:20%;  font-size: 2em; ">
-                <div ng-if="details.mobile==true" style="width:100%" >
-                    <div class="btn-group" style="width:100%" >
-                        הקלידו את תשובתכם
+
+                <div ng-if="currentRound.status=='init' " >
+                    <div ng-if="details.mobile==true" style="    margin-top: 15%; margin-right: 20%" >
+
+                        <p style="font-size: 25vw;; font-family:'Comic Sans MS'; text-align: center">+</p>
+                    </div>
+                    <div ng-if="details.mobile==false" style="   margin-top:25%; margin-right: 5%"  >
+
+                        <p style="font-size: 10vw; text-align: center; margin-top: 10% ">+</p>
+                    </div>
+
+
+                </div>
+                <div ng-if="currentRound.status=='flanker' " style="  ">
+                    <div ng-if="details.mobile==true"  style=" font-size: 25vw; position: absolute; display: inline-block; text-align: center; right: 20%;" >
+                        {{currentRound.flanker}}
+                        {{currentRound.flanker}}
+                        {{currentRound.flanker}}
                         <br>
-                        <button style="width:40%" ontouchstart="onTouchEvent('r')" >R</button>
-                        <button style="width:40%" ontouchstart="onTouchEvent('h')">H</button>
+                        {{currentRound.flanker}}
+                        +
+                        {{currentRound.flanker}}
+                        <br>
+                        {{currentRound.flanker}}
+                        {{currentRound.flanker}}
+                        {{currentRound.flanker}}
+                    </div>
+
+
+                    <div ng-if="details.mobile==false"  style=" font-size: 10vw; position: absolute; display: inline-block; text-align: center; right: 40%" >
+                        {{currentRound.flanker}}
+                        {{currentRound.flanker}}
+                        {{currentRound.flanker}}
+                        <br>
+                        {{currentRound.flanker}}
+                        +
+                        {{currentRound.flanker}}
+                        <br>
+                        {{currentRound.flanker}}
+                        {{currentRound.flanker}}
+                        {{currentRound.flanker}}
+                    </div>
+
+
+
+            </div>
+                <div ng-if="currentRound.status=='target'" >
+                    <div ng-if="details.mobile==true" style=" font-size: 25vw; position: absolute; display: inline-block; text-align: center;  right: 20% "  >
+                        {{currentRound.flanker}}
+                        {{currentRound.flanker}}
+                        {{currentRound.flanker}}
+                        <br>
+                        {{currentRound.flanker}}
+                        {{currentRound.target}}
+                        {{currentRound.flanker}}
+                        <br>
+                        {{currentRound.flanker}}
+                        {{currentRound.flanker}}
+                        {{currentRound.flanker}}
+
+                    </div>
+                    <div ng-if="details.mobile==false" style=" font-size: 10vw; position: absolute; display: inline-block; text-align: center; right: 40%" >
+                        {{currentRound.flanker}}
+                        {{currentRound.flanker}}
+                        {{currentRound.flanker}}
+                        <br>
+                        {{currentRound.flanker}}
+                        {{currentRound.target}}
+                        {{currentRound.flanker}}
+                        <br>
+                        {{currentRound.flanker}}
+                        {{currentRound.flanker}}
+                        {{currentRound.flanker}}
+                    </div>
+
+
+                </div>
+
+
+
+
+            <div ng-if="currentRound.status=='answer'" style="">
+                <div ng-if="details.mobile==true" style="width:100%" >
+                    <div style="text-align: center; font-size: 6vw; margin-top: 40%">  הקלידו את תשובתכם </div>
+                    <div class="btn-group" style=" text-align: center; display: inline-block;  font-size: 4em; width: 100%; margin-top: 10%" >
+
+                        <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " ontouchstart="onTouchEvent('r')" >R</button>
+                        <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " ontouchstart="onTouchEvent('h')">H</button>
+
                     </div>
                 </div>
-                <div ng-if="details.mobile==false" >
-                    הקלידו את תשובתכם
+                <div ng-if="details.mobile==false"  >
+                    <div style="text-align: center; font-size: 8vw">  הקלידו את תשובתכם </div>
+
                     <br>
                     {{currentRound.message}}
                 </div>
@@ -123,7 +217,42 @@
         </div>
 
         <div class="container" ng-if="doneIt==true"  style=" position: absolute; display: inline-block; top:20%; right: 40%; font-size: 2em; ">
-            תודה על השתתפותכם בניסוי!
+
+
+
+            <h1> תודה על השתתפותכם!</h1>
+            <h3>הצלחתם להשיג
+                {{score}}
+                נקודות</h3>
+            <h3>
+                היו לכם
+                {{(mistakes/roundNum)*100}}%
+                טעויות
+            </h3>
+            <div ng-if="((mistakes/roundNum)*100)<15">
+                <h2>כל הכבוד!</h2>
+                <h3>ממוצע השגיאות עומד על 15% והצגתם תוצאות טובות יותר</h3>
+                <h3>
+                     יכולות עיכוב תגובה טובה, כפי שהצגתם, מיוחסות ליכולות משופרות בתחומי חיים רבים, תוכלו לקרוא עוד על כך בקישור הבא
+                    <a href="https://en.wikipedia.org/wiki/Cognitive_inhibition" target="_blank">אלדד, אני אמצא מאמר מדע פופולרי טוב יותר :)</a>
+                    </h3>
+            </div>
+            <div ng-if="((mistakes/roundNum)*100)>15">
+                <h2>אממ...</h2>
+                <h3>ממוצע השגיאות עומד על 15%</h3>
+                <h3>התוצאה שלכם קצת נמוכה</h3>
+                <p> אם חשוב לכם לשפר את יכולות עיכוב התגובה שלכם, תוכלו להתאמן על המטלה <a href="https://www.psytoolkit.org/experiment-library/experiment_flanker.html" target="_blank"> כאן</a></p>
+            </div>
+            <br>
+            <br>
+
+            <p>אודה לכם מאוד, אם תשתפו את הניסוי, ותסייעו לי להגיע לכמות הנבדקים הדרושה למחקר!</p>
+
+            <iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Fflankert.herokuapp.com%2F&layout=button&size=large&mobile_iframe=true&width=74&height=28&appId" width="74" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+
+
+
+
         </div>
 
     </div>
@@ -131,9 +260,10 @@
     <script>
 
 
+
         function registerToKeyPress(functionToActivate) {
-            $(document).removeAttr('keyPress');
-            $(document).keypress(functionToActivate);
+            $(document).removeAttr('keydown');
+            $(document).keydown(functionToActivate);
         };
         function registerToKeyUp(functionToActivate) {
             $(document).removeAttr('keyup');
@@ -143,6 +273,10 @@
             $(document).removeAttr('touchend');
             $(document).bind('touchend',functionToActivate);
         };
+
+
+
+
 
         var forTouchPromise;
         function onTouchEvent(someChar) {
@@ -199,11 +333,12 @@
                 }];
             /****Varibles*****/
             $scope.doneIt=false;
+            $scope.explain=false;
             $scope.warningsData="";
             $scope.displayTest=false;
             $scope.dataV=false;
             $scope.roundNum=0;
-            $scope.fasterText="מהרו!";
+            $scope.fasterText="הגבירו מהירות!";
             $scope.speedupTime=2000;
 
             $scope.initTime=500;
@@ -239,23 +374,37 @@
             }*/
             $scope.startUpdate=function(){
                if($scope.dataV){
-                   $scope.displayTest=true;
-                   $scope.addNewRound();
-                   registerToKeyPress($scope.getAnswer);
-                   registerToKeyUp($scope.updateAnswer);
-                   registerToTouchEnd($scope.updateAnswer);
+                   $scope.explain=true;
                }
-            }
+            };
+            $scope.startGame=function(){
+                $scope.explain=false;
+                $scope.displayTest=true;
+                $scope.addNewRound();
+                registerToKeyPress($scope.getAnswer);
+                registerToKeyUp($scope.updateAnswer);
+                registerToTouchEnd($scope.updateAnswer);
+            };
+
             $scope.detailsValidation=function(){
                 if($scope.details.gender!=null){
                     if($scope.details.learningDisabilities!=null){
                             if($scope.details.age>=18){
-                               $scope.dataV=true;
-                               $scope.startUpdate();
+                                if($scope.details.education!=null){
+                                    $scope.dataV=true;
+                                    $scope.startUpdate();
+
+                                }
+                                else {
+                                    $scope.warningsData="לא הוזנה השכלה";
+                                }
+
                             }
+
                             else {
                                 $scope.warningsData="לא הוזן גיל, או שהוזן גיל הקטן מ-18 ";
                         }
+
 
                 }  else {
                         $scope.warningsData="יש לענות על כל השאלות";
@@ -318,7 +467,7 @@
                 console.log($scope.currentRound.clicks);
             };
             $scope.getAnswer= function(e) {
-                $scope.addClicks(String.fromCharCode(e.charCode));
+                $scope.addClicks(String.fromCharCode(e.keyCode));
                 $scope.$apply();
             };
             $scope.updateAnswer= function(e) {
@@ -353,9 +502,29 @@
                 else if($scope.currentRound.status=='done'){
                     if ($scope.currentRound.clicks.length>0) {
                         var lastClick = $scope.currentRound.clicks[$scope.currentRound.clicks.length-1];
+                        var pointToAdd=Math.round(($scope.speedupTime- ($scope.currentRound.clicks[ $scope.currentRound.clicks.length-1].timePress.getTime()-$scope.currentRound.startTime.getTime()))/1000);
+                        if($scope.roundNum==0){
+                            $scope.score=0;
+                            $scope.mistakes=0;
+                        }
+                        console.log("*****point to add"+pointToAdd)
                         $scope.previousScore=$scope.score;
                         if (lastClick.k.toLowerCase()==$scope.currentRound.target.toLowerCase()) {
-                            $scope.score++;
+                            if(pointToAdd<=0){
+                                $scope.score=$scope.score+1;
+
+                            } else {
+                                $scope.score=$scope.score+pointToAdd;
+                            }
+
+                        } else {
+                            $scope.mistakes++;
+                            if( $scope.score<=10){
+                                $scope.score=0;
+
+                            } else {
+                                $scope.score=$scope.score-2;
+                            }
                         }
                     }
                     $scope.addNewRound();
@@ -372,7 +541,10 @@
             $scope.previousScore=-1;
             $scope.score = 0;
         });
+
     </script>
+
+
 
 </body>
 </html>

@@ -131,6 +131,9 @@ express()
     .get('/download', function(req, res){
         res.download(resFile);
     })
+    .get('/downloadParams', function(req, res){
+        res.download(configFile);
+    })
   .post('/results', (req, res) => writeToFile(req,res))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 

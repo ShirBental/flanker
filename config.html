@@ -15,27 +15,36 @@
 <body>
 <div  style="text-align: right">
     <div ng-app="myApp" ng-controller="myCtrl">
-        <p style="font-size: 2em">זמן לתגובה:</p>
-        <input  ng-model="config.answer"/><br>
-        <p style="font-size: 2em">זמן תיקון:</p>
-        <input  ng-model="config.checkAgainTime"/><br>
-        <p style="font-size: 2em">זמן עד להופעת גירוי מטרה:</p>
-        <input  ng-model="config.flankerTime"/><br>
-        <p style="font-size: 2em">זמן אתחול:</p>
-        <input  ng-model="config.initTime"/><br>
-        <p style="font-size: 2em">זמן עד למענה:</p>
-        <input  ng-model="config.targetTime"/><br>
-        <div id="rounds">
+        <div class="container" style="width: 100%; right: 25%">
+            <h2 style="text-align: center"><b>פרמטרים כלליים:</b></h2>
+        <p style="font-size: 2em"> זמן עד אתחול:  <input  ng-model="config.answer"/></p>
+        <p style="font-size: 2em">זמן לתיקון:  <input  ng-model="config.checkAgainTime"/></p>
+
+        <p style="font-size: 2em">משך פלנקר  <input  ng-model="config.flankerTime"/></p>
+
+        <p style="font-size: 2em">משך אתחול: <input  ng-model="config.initTime"/> </p>
+        <p style="font-size: 2em"> משך הופעת גירוי מטרה: <input  ng-model="config.targetTime"/></p>
+            <h2 style="text-align: center"><b>ניסיונות :</b></h2>
+        <div id="rounds" style="width: 100%; text-align: center;">
             <div ng-repeat="round in config.rounds">
-                <h2>
-                סיבוב מספר
-                {{$index+1}}
-                </h2>
-                <p style="font-size: 2em">מטרה:</p>
-                <input  ng-model="round.target"/><br>
-                <p style="font-size: 2em">פלאנקר:</p>
-                <input  ng-model="round.flanker"/><br>
-                <button  class="btn btn-primary btn-danger" type="button"  value="X" ng-click="removeRound($index)">X</button>
+
+
+                <div style="display: inline-block; width: 100%; font-size: 1.5em">
+                    <b>
+                        ניסיון מספר
+                        {{$index+1}} :
+
+                    </b>
+
+                    מטרה:
+                    <input  ng-model="round.target"/>
+                    פלנקר:
+                    <input  ng-model="round.flanker"/>
+                    <button  class="btn btn-primary btn-danger" type="button"  value="X" ng-click="removeRound($index)">X</button>
+
+                </div>
+
+
             </div>
             <br/>
             <button  class="btn btn-primary btn-primary" type="button"  value="הוסף" ng-click="addRound()">הוסף</button>
@@ -43,7 +52,8 @@
         </div>
         <br/>
         <br/>
-        <button  class="btn btn-primary btn-primary" type="button"  value="שמור" ng-click="save()">שמור</button>
+        <button  class="btn btn-primary btn-primary" type="button"  value="שמור" ng-click="save()" style="width: 100%">שמור</button>
+        </div>
     </div>
 </div>
     <script>
@@ -69,6 +79,7 @@
             };
             $scope.save = function() {
                 $http.post('configParams',$scope.config);
+                window.alert("נשמר");
             };
         });
     </script>
