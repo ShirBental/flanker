@@ -80,13 +80,61 @@
             </div>
         </div>
         <div class="container" ng-if="!displayTest && !doneIt && explain">
-            <div style="width: 80%; margin-right: 10%; margin-top: 20%">
+            <div style="width: 80%; margin-right: 10%; margin-top: 10%">
                 <h1> תודה רבה על ההשתתפות במחקר,</h1>
                 <br>
                 <h4>במהלך המשימה שאמורה לקחת כ 6 דקות, תבצע מטלת פלנקר בה יופיעו על המסך אותיות H או R כשעלייך לזהות את האות שנמצאת במרכז</h4>
                 <h4>לפני הופעת האותיות, יופיע סימן "מטרה" + היכן שהאות המרכזית תופיע כחצי שנייה לאחר מכן.</h4>
-                <h4>עליך לזהות את אות המטרה ולהגיב במהירות הגבוהה ביותר בלחיצה על המקש המתאים על המקלדת.</h4>
-                <h4>במידה וטעית בלחיצה, תוכל לתקן את בחירתך בלחיצה נוספת על המקש הנכון. גם זה צריך להתבצע בהקדם האפשרי,  לצורך התיקון יהיה חלון קצר של שנייה אחת בלבד.</h4>
+
+                </h4>
+                <div ng-if="!details.mobile">
+                    <h4>עליך לזהות את אות המטרה וללחוץ על המקש שלה במקלדת
+                        <b>  במהירות הגבוהה ביותר</b>
+                    לדוגמה, אם מופיע</h4>
+
+                    <div style=" font-size: 2vw; display: inline-block; text-align: center; margin-right: 40%" >
+                        H
+                        H
+                        H
+                        <br>
+                        H
+                        R
+                       H
+                        <br>
+                        H
+                        H
+                        H
+                    </div>
+                        <h4 style="margin-right: 40%">עלייכם ללחוץ על מקש R במקלדת</h4>
+
+                </div>
+                <div ng-if="details.mobile">
+                    <h4>.עליך לזהות את אות המטרה וללחוץ על הכפתור שלה מבין הכפתורים שיופיעו מיד לאחריה
+                        <b> עליכם ללחוץ במהירות הגבוהה ביותר</b>
+                        לדוגמה, אם מופיע</h4>
+
+                    <div style=" font-size: 15vw; display: inline-block; text-align: center; margin-right: 10%" >
+                        H
+                        H
+                        H
+                        <br>
+                        H
+                        R
+                        H
+                        <br>
+                        H
+                        H
+                        H
+                    </div>
+                    <h4 style="">עליהם ללחוץ על כפתור ה R</h4>
+                    <div style="margin-bottom: 10px; font-size: 2em; margin-right: 15%;">
+                    <button style="padding: 25px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " ontouchstart='window.alert("בדיוק כך")' >R</button>
+                    <button style="padding: 25px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " ontouchstart='window.alert("על הכפתור השני")' >H</button>
+                    </div>
+
+                </div>
+
+                <h4>במידה וטעיתם בלחיצה, תוכלו לתקן את בחירתכם בלחיצה נוספת על המקש הנכון. גם זה צריך להתבצע בהקדם האפשרי,  לצורך התיקון יהיה חלון קצר של שנייה אחת בלבד.</h4>
                 <br>
                 <h2 style="font-style: oblique">ככל שתגובותייך יהיו מהירות יותר, כך הניקוד עליהן יהיה גבוה יותר. </h2>\
                 <h2> במקרה של תגובה שגויה, תתווסף לך עוד שאלה למניין השאלות.</h2>
@@ -519,7 +567,7 @@
 
                         } else {
                             $scope.mistakes++;
-                            if( $scope.score<=10){
+                            if( $scope.score<=2){
                                 $scope.score=0;
 
                             } else {
