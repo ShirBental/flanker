@@ -89,6 +89,9 @@ var writeToFile=function(req,res) {
     finalString += output.demographic_details.age + ',';
     finalString += req.connection.remoteAddress + ',';
     finalString += output.demographic_details.learningDisabilities + ',';
+    finalString +=output.demographic_details.education +',';
+    finalString +=output.demographic_details.size+ ',';
+
     testData = output.test;
     for(var i=0; i<testData.length; i++) {
         var currentTest = testData[i];
