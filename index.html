@@ -23,7 +23,7 @@
             <br>
             <div style="width: 80%; margin-right: 10%; padding: 5%">
             <h1 style="text-align:center; text-decoration: underline">מטלת פלנקר </h1>
-
+                {{playSomthing}};
             <h3 style="text-align: center"> תודה רבה על נכונותכם להשתתף במחקר</h3>
             <h3 style="text-align: center"> המחקר נעשה במסגרת סמינר בתחום מוח וקוגניציה, ועוסק בניתוח מהירות ונכונות תגובות לאחר גירויים שונים. תוכלו להרחיב ולקרוא על המטלה בלחיצה על ההסבר בתחתית העמוד</h3>
             <h3 style="text-align: center"> המחקר הינו אנונימי,ולא נאסף אודותיכם מידע נוסף</h3>
@@ -80,68 +80,23 @@
             </div>
             </div>
         </div>
-        <div class="container" ng-if="!displayTest && !doneIt && explain">
-            <div style="width: 80%; margin-right: 10%; margin-top: 10%">
-                <h1> תודה רבה על ההשתתפות במחקר,</h1>
-                <br>
-                <h4>במהלך המשימה שאמורה לקחת כ 6 דקות, תבצע מטלת פלנקר בה יופיעו על המסך אותיות H או R כשעלייך לזהות את האות שנמצאת במרכז</h4>
-                <h4>לפני הופעת האותיות, יופיע סימן "מטרה" + היכן שהאות המרכזית תופיע כחצי שנייה לאחר מכן.</h4>
+        <div class="container"  ng-if="!displayTest && !doneIt && explain">
+                <h1 style="text-align: center"><u> הוראות</u></h1>
+                <h3 style="text-align: center"> הפעילו את השמע במכשירכם</h3>
 
-                </h4>
                 <div ng-if="!details.mobile">
-                    <h4>עליך לזהות את אות המטרה וללחוץ על המקש שלה במקלדת
-                        <b>  במהירות הגבוהה ביותר</b>
-                    לדוגמה, אם מופיע</h4>
+                    <iframe width="100%" height="600px" src="https://www.youtube.com/embed/1LbZOdZSN0k" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                 </div>
 
-                    <div style=" font-size: 2vw; display: inline-block; text-align: center; margin-right: 40%" >
-                        H
-                        H
-                        H
-                        <br>
-                        H
-                        R
-                       H
-                        <br>
-                        H
-                        H
-                        H
-                    </div>
-                        <h4 style="margin-right: 40%">עלייכם ללחוץ על מקש R במקלדת</h4>
-
-                </div>
                 <div ng-if="details.mobile">
-                    <h4>.עליך לזהות את אות המטרה וללחוץ על הכפתור שלה מבין הכפתורים שיופיעו מיד לאחריה
-                        <b> עליכם ללחוץ במהירות הגבוהה ביותר</b>
-                        לדוגמה, אם מופיע</h4>
-
-                    <div style=" font-size: 15vw; display: inline-block; text-align: center; margin-right: 10%" >
-                        H
-                        H
-                        H
-                        <br>
-                        H
-                        R
-                        H
-                        <br>
-                        H
-                        H
-                        H
-                    </div>
-                    <h4 style="">עליהם ללחוץ על כפתור ה R</h4>
-                    <div style="margin-bottom: 10px; font-size: 2em; margin-right: 15%;">
-                    <button style="padding: 25px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " ontouchstart='window.alert("בדיוק כך")' >R</button>
-                    <button style="padding: 25px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " ontouchstart='window.alert("על הכפתור השני")' >H</button>
-                    </div>
+                    <iframe width="100%" height="400px" src="https://www.youtube.com/embed/DTWHEzW2ItA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
                 </div>
 
-                <h4>במידה וטעיתם בלחיצה, תוכלו לתקן את בחירתכם בלחיצה נוספת על המקש הנכון. גם זה צריך להתבצע בהקדם האפשרי,  לצורך התיקון יהיה חלון קצר של שנייה אחת בלבד.</h4>
-                <br>
-                <h2 style="font-style: oblique">ככל שתגובותייך יהיו מהירות יותר, כך הניקוד עליהן יהיה גבוה יותר, והניסוי יהיה קצר יותר. </h2>\
-                <h2> במקרה של תגובה שגויה, תתווסף לך עוד שאלה למניין השאלות.</h2>
+
                 <button  class="btn btn-primary btn-block" type="submit"  value="Submit" ng-click="startGame()" style="font-size: 2em">מוכנים? התחילו!</button>
 
-            </div>
+
         </div>
         <div class="container" ng-if="displayTest && !doneIt &&!explain" >
 
@@ -160,52 +115,94 @@
             </div>
 
                 <div ng-if="currentRound.status=='init' " >
-                    <div ng-if="details.mobile==true" style="    margin-top: 15%; margin-right: 20%" >
+                    <div ng-if="details.mobile==true"   >
+                        <div style=" font-size: 18vw;  display: inline-block; text-align: center; margin-right: 20%;">
+                        <a style="color: white">{{currentRound.flanker}}
+                            {{currentRound.flanker}}
+                            {{currentRound.flanker}}
+                            <br>
+                            {{currentRound.flanker}}</a>
+                        +
+                        <a style="color: white">{{currentRound.flanker}}
+                            <br>
+                            {{currentRound.flanker}}
+                            {{currentRound.flanker}}
+                            {{currentRound.flanker}}</a>
+                        </div>
 
-                        <p style="font-size: 25vw;; font-family:'Comic Sans MS'; text-align: center">+</p>
+                        <div style="text-align: center; font-size: 6vw; color: white" >  הקלידו את תשובתכם </div>
+                        <div class="btn-group" style=" text-align: center; display: inline-block;  font-size: 4em; width: 100%; margin-bottom: 10%" >
+
+                            <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " >M</button>
+                            <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " >N</button>
+
+                        </div>
+
                     </div>
-                    <div ng-if="details.mobile==false" style="   margin-top:25%; margin-right: 5%"  >
+                    <div ng-if="details.mobile==false"  style=" font-size: 8vw; position: absolute; display: inline-block; text-align: center; right: 40%" >
+                        <a style="color: white">{{currentRound.flanker}}
+                            {{currentRound.flanker}}
+                            {{currentRound.flanker}}
+                            <br>
+                            {{currentRound.flanker}}</a>
+                        +
+                        <a style="color: white">{{currentRound.flanker}}
+                            <br>
+                            {{currentRound.flanker}}
+                            {{currentRound.flanker}}
+                            {{currentRound.flanker}}</a>
 
-                        <p style="font-size: 8vw; text-align: center; margin-top: 10% ">+</p>
                     </div>
 
 
                 </div>
                 <div ng-if="currentRound.status=='flanker' " style="  ">
-                    <div ng-if="details.mobile==true"  style=" font-size: 25vw; position: absolute; display: inline-block; text-align: center; right: 20%;" >
-                        {{currentRound.flanker}}
-                        {{currentRound.flanker}}
-                        {{currentRound.flanker}}
-                        <br>
-                        {{currentRound.flanker}}
+                    <div ng-if="details.mobile==true"   >
+                        <div style=" font-size: 18vw;  display: inline-block; text-align: center;  margin-right: 20%;">
+                        <a>{{currentRound.flanker}}
+                            {{currentRound.flanker}}
+                            {{currentRound.flanker}}
+                            <br>
+                            {{currentRound.flanker}}</a>
                         +
-                        {{currentRound.flanker}}
-                        <br>
-                        {{currentRound.flanker}}
-                        {{currentRound.flanker}}
-                        {{currentRound.flanker}}
+                        <a>{{currentRound.flanker}}
+                            <br>
+                            {{currentRound.flanker}}
+                            {{currentRound.flanker}}
+                            {{currentRound.flanker}}</a>
+
+                        </div>
+                        <div style="text-align: center; font-size: 6vw; color: white" >  הקלידו את תשובתכם </div>
+                        <div class="btn-group" style=" text-align: center; display: inline-block;  font-size: 4em; width: 100%; margin-bottom: 10%" >
+
+                            <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " >M</button>
+                            <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " >N</button>
+
+                        </div>
                     </div>
 
 
                     <div ng-if="details.mobile==false"  style=" font-size: 8vw; position: absolute; display: inline-block; text-align: center; right: 40%" >
-                        {{currentRound.flanker}}
-                        {{currentRound.flanker}}
-                        {{currentRound.flanker}}
-                        <br>
-                        {{currentRound.flanker}}
+                        <a>{{currentRound.flanker}}
+                            {{currentRound.flanker}}
+                            {{currentRound.flanker}}
+                            <br>
+                            {{currentRound.flanker}}</a>
                         +
-                        {{currentRound.flanker}}
-                        <br>
-                        {{currentRound.flanker}}
-                        {{currentRound.flanker}}
-                        {{currentRound.flanker}}
+                        <a>{{currentRound.flanker}}
+                            <br>
+                            {{currentRound.flanker}}
+                            {{currentRound.flanker}}
+                            {{currentRound.flanker}}</a>
                     </div>
 
 
 
             </div>
-                <div ng-if="currentRound.status=='target'" >
-                    <div ng-if="details.mobile==true" style=" font-size: 25vw; position: absolute; display: inline-block; text-align: center;  right: 20% "  >
+            <div ng-if="currentRound.status=='wait' " style="  ">
+                <div ng-if="details.mobile==true"   >
+                    <div style=" font-size: 18vw;  display: inline-block; text-align: center;  margin-right: 20%; color: white">
+
                         {{currentRound.flanker}}
                         {{currentRound.flanker}}
                         {{currentRound.flanker}}
@@ -217,21 +214,66 @@
                         {{currentRound.flanker}}
                         {{currentRound.flanker}}
                         {{currentRound.flanker}}
+                    </div>
+                    <div style="text-align: center; font-size: 6vw; color: white" >  הקלידו את תשובתכם </div>
+
+                    <div class="btn-group" style=" text-align: center; display: inline-block;  font-size: 4em; width: 100%; margin-bottom: 10%" >
+
+                        <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b">M</button>
+                        <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b ">N</button>
+
+                    </div>
+
+                </div>
+                <div ng-if="details.mobile==false"  style=" font-size: 18vw; position: absolute; display: inline-block; text-align: center; right: 40%" >
+                    <h1>waiting...</h1>
+
+                </div>
+
+
+
+            </div>
+                <div ng-if="currentRound.status=='target'" >
+                    <div ng-if="details.mobile==true"   >
+                        <div style=" font-size: 18vw;  display: inline-block; text-align: center; margin-right: 20%;">
+
+                        {{currentRound.flanker}}
+                        {{currentRound.flanker}}
+                        {{currentRound.flanker}}
+                        <br>
+                        {{currentRound.flanker}}
+                        {{currentRound.target}}
+                        {{currentRound.flanker}}
+                        <br>
+                        {{currentRound.flanker}}
+                        {{currentRound.flanker}}
+                        {{currentRound.flanker}}
+                        </div>
+                        <div style="text-align: center; font-size: 6vw; color: white" >  הקלידו את תשובתכם </div>
+
+                        <div class="btn-group" style=" text-align: center; display: inline-block;  font-size: 4em; width: 100%; margin-bottom: 10%" >
+
+                            <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b">M</button>
+                            <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b ">N</button>
+
+                        </div>
 
                     </div>
                     <div ng-if="details.mobile==false" style=" font-size: 8vw; position: absolute; display: inline-block; text-align: center; right: 40%" >
-                        {{currentRound.flanker}}
-                        {{currentRound.flanker}}
-                        {{currentRound.flanker}}
-                        <br>
-                        {{currentRound.flanker}}
+                        <a>{{currentRound.flanker}}
+                            {{currentRound.flanker}}
+                            {{currentRound.flanker}}
+                            <br>
+                            {{currentRound.flanker}}</a>
                         {{currentRound.target}}
-                        {{currentRound.flanker}}
-                        <br>
-                        {{currentRound.flanker}}
-                        {{currentRound.flanker}}
-                        {{currentRound.flanker}}
+                        <a>{{currentRound.flanker}}
+                            <br>
+                            {{currentRound.flanker}}
+                            {{currentRound.flanker}}
+                            {{currentRound.flanker}}</a>
+
                     </div>
+
 
 
                 </div>
@@ -241,24 +283,68 @@
 
             <div ng-if="currentRound.status=='answer'" style="">
                 <div ng-if="details.mobile==true" style="width:100%" >
-                    <div style="text-align: center; font-size: 6vw; margin-top: 40%">  הקלידו את תשובתכם </div>
-                    <div class="btn-group" style=" text-align: center; display: inline-block;  font-size: 4em; width: 100%; margin-top: 10%" >
 
-                        <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " ontouchstart="onTouchEvent('r')" >R</button>
-                        <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " ontouchstart="onTouchEvent('h')">H</button>
+                        <div style=" font-size: 18vw;  display: inline-block; text-align: center; right: 20%; color: white">
+                            <a>{{currentRound.flanker}}
+                                {{currentRound.flanker}}
+                                {{currentRound.flanker}}
+                                <br>
+                                {{currentRound.flanker}}</a>
+                            +
+                            <a>{{currentRound.flanker}}
+                                <br>
+                                {{currentRound.flanker}}
+                                {{currentRound.flanker}}
+                                {{currentRound.flanker}}</a>
 
+                        </div>
+                        <div style="text-align: center; font-size: 6vw;">  הקלידו את תשובתכם </div>
+                        <div class="btn-group" style=" text-align: center; display: inline-block;  font-size: 4em; width: 100%; margin-bottom: 10%" >
+
+                            <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " ontouchstart="onTouchEvent('m')" >M</button>
+                            <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " ontouchstart="onTouchEvent('n')">N</button>
+
+                        </div>
                     </div>
-                </div>
                 <div ng-if="details.mobile==false"  >
                     <div style="text-align: center; font-size: 8vw">  הקלידו את תשובתכם </div>
 
-                    <br>
+                </div>
+
+                    </div>
+
+
+
+
+            <div ng-if="currentRound.status=='done'">
+                <div ng-if="details.mobile==true" style="width:100%" >
+
+                    <div style=" font-size: 18vw;  display: inline-block; text-align: center; right: 20%; color: white">
+                        <a>{{currentRound.flanker}}
+                            {{currentRound.flanker}}
+                            {{currentRound.flanker}}
+                            <br>
+                            {{currentRound.flanker}}</a>
+                        +
+                        <a>{{currentRound.flanker}}
+                            <br>
+                            {{currentRound.flanker}}
+                            {{currentRound.flanker}}
+                            {{currentRound.flanker}}</a>
+
+                    </div>
+                    <div style="text-align: center; font-size: 6vw;">  {{currentRound.message}} </div>
+                    <div class="btn-group" style=" text-align: center; display: inline-block;  font-size: 4em; width: 100%; margin-bottom: 10%" >
+
+                        <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " ontouchstart="onTouchEvent('m')" >M</button>
+                        <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " ontouchstart="onTouchEvent('n')">N</button>
+
+                    </div>
+                </div>
+                <div ng-if="details.mobile==false">
                     {{currentRound.message}}
                 </div>
 
-            </div>
-            <div ng-if="currentRound.status=='done'" style="position: absolute; display: inline-block; top:20%;  font-size: 2em; ">
-                    {{currentRound.message}}
             </div>
 
 
@@ -290,7 +376,7 @@
             <div ng-if="((mistakes/roundNum)*100)>15">
                 <h2>אממ...</h2>
                 <h3>ממוצע השגיאות עומד על 15%</h3>
-                <h3>התוצאה שלכם קצת נמוכה</h3>
+                <h3>וממוצע השגיאות שלכם קצת גבוה</h3>
                 <p> אם חשוב לכם לשפר את יכולות עיכוב התגובה שלכם, תוכלו להתאמן על המטלה <a href="https://www.psytoolkit.org/experiment-library/experiment_flanker.html" target="_blank"> כאן</a></p>
             </div>
             <br>
@@ -328,14 +414,15 @@
 
 
 
+
+
+
+
         var forTouchPromise;
+
         function onTouchEvent(someChar) {
             forTouchPromise(someChar);
         }
-        /*function registerToTouchEnd(element, functionToActivate) {
-            element.removeAttr('touchend');
-            element.bind('touchend',functionToActivate);
-        };*/
 
         var isMobile = false; //initiate as false
         // device detection
@@ -395,14 +482,18 @@
             $scope.initTime=500;
             $scope.flankerTime=500;
             $scope.targetTime=1000;
+            $scope.wait=100;
             $scope.answer=1000;
             $scope.checkAgainTime=1000;
+            $scope.rightMusic=new Audio('/voice/get.mp3');
+            $scope.wrongMusic=new Audio('/voice/miss.mp3');
 
             $http.get('configParams').then(function(data) {
                 $scope.config=data.data;
                 if ($scope.config) {
                     $scope.initTime=$scope.config.initTime;
                     $scope.flankerTime=$scope.config.flankerTime;
+                    $scope.wait=$scope.config.wait;
                     $scope.targetTime=$scope.config.targetTime;
                     $scope.answer=$scope.config.answer;
                     $scope.checkAgainTime=$scope.config.checkAgainTime;
@@ -411,18 +502,20 @@
             });
 
             /****Functions*****/
+
+            $scope.playError= function(){
+                $scope.wrongMusic.play();
+            };
+            $scope.playRight=function(){
+                $scope.rightMusic.play();
+            };
+
             $scope.formSubmit= function () {
               console.log($scope.details);
               $scope.detailsValidation();
 
             };
-            /*$scope.mobileOrNot=function(){
-                if(window.innerWidth<=600){
-                    $scope.details.mobile=true;
-                    console.log("mobile");
-                }
 
-            }*/
             $scope.startUpdate=function(){
                if($scope.dataV){
                    $scope.explain=true;
@@ -529,13 +622,18 @@
             $scope.updateStatus=function(){
                 console.log("updating status for:",$scope.roundNum,$scope.currentRound.status);
                 if($scope.currentRound.status=='init'){
+                    $scope.res=true;
                     console.log($scope.details.size);
                     $scope.currentRound.status='flanker';
                     $timeout($scope.updateStatus,$scope.initTime);
                 }
                 else if($scope.currentRound.status=='flanker'){
-                    $scope.currentRound.status='target';
+                    $scope.currentRound.status='wait';
                     $timeout($scope.updateStatus,$scope.flankerTime);
+                }
+                else if($scope.currentRound.status=='wait'){
+                    $scope.currentRound.status='target';
+                    $timeout($scope.updateStatus,$scope.wait);
                 }
                 else if($scope.currentRound.status=='target'){
                     $scope.currentRound.status='answer';
@@ -562,6 +660,8 @@
                         console.log("*****point to add"+pointToAdd)
                         $scope.previousScore=$scope.score;
                         if (lastClick.k.toLowerCase()==$scope.currentRound.target.toLowerCase()) {
+                            $scope.playRight();
+                            $scope.res=true;
                             if(pointToAdd<=0){
                                 $scope.score=$scope.score+1;
 
@@ -570,6 +670,9 @@
                             }
 
                         } else {
+                            $scope.res=false;
+                            $scope.playError();
+
                             $scope.mistakes++;
                             if( $scope.score<=2){
                                 $scope.score=0;
@@ -584,7 +687,6 @@
 
             };
             $scope.startUpdate();
-            //$scope.mobileOrNot();
             forTouchPromise = function(someChar) {
                 $scope.addClicks(someChar);
                 $scope.$apply();

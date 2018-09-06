@@ -17,17 +17,16 @@
     <div ng-app="myApp" ng-controller="myCtrl">
         <div class="container" style="width: 100%; right: 25%">
             <h2 style="text-align: center"><b>פרמטרים כלליים:</b></h2>
-        <p style="font-size: 2em"> זמן עד אתחול:  <input  ng-model="config.answer"/></p>
-            <p>משך זמן עד להופעת סימן ה+, בזמן זה לא ניתן לתקן יותר</p>
+        <p style="font-size: 2em"> זמן לתגובה:  <input  ng-model="config.answer"/></p>
+            <p>משך זמן המצופה לתגובה</p>
         <p style="font-size: 2em">זמן לתיקון:  <input  ng-model="config.checkAgainTime"/></p>
-            <p>משך הזמן בו ניתן לתקן את התשובה, מיד לאחריו יופיע הניסיון הבא. הזמן נמדד מרגע התגובה</p>
-
-        <p style="font-size: 2em">משך פלנקר: <input  ng-model="config.initTime"/> </p>
+            <p>משך הזמן בו ניתן לתקן את התשובה, לאחריו יופיע הניסיון הבא. הזמן נמדד מרגע התגובה</p>
+            <p style="font-size: 2em">משך פלנקר: <input  ng-model="config.initTime"/> </p>
             <p>משך זמן עד הופעת גירוי המטרה</p>
-
-            <p style="font-size: 2em">משך זמן גירוי מטרה  <input  ng-model="config.flankerTime"/></p>
+            <p style="font-size: 2em">משך זמן גירוי מטרה  <input  ng-model="config.wait"/></p>
             <p>משך הזמן בו מופיע גירוי המטרה</p>
-
+            <p style="font-size: 2em">המתנה בין הפלנקר לתגובה <input  ng-model="config.flankerTime"/></p>
+            <p>משך הפער בין גירוי המטרה לפלנקר</p>
         <p style="font-size: 2em"> זמן עד הופעת חלונית התגובה <input  ng-model="config.targetTime"/></p>
             <p>כמה שפחות</p>
             <h2 style="text-align: center"><b>ניסיונות :</b></h2>
