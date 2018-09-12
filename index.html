@@ -83,15 +83,45 @@
         <div class="container"  ng-if="!displayTest && !doneIt && explain">
                 <h1 style="text-align: center"><u> הוראות</u></h1>
                 <h3 style="text-align: center"> הפעילו את השמע במכשירכם</h3>
+            <video  width="100%" controls >
+                <source src="ex_mobile.mp4" type="video/mp4">
+                <source src="ex_mobile.ogg" type="video/ogg">
+            </video>
+            <h3>
+                שלום ותודה על הסכמתכם להשתתף במחקר, פרטיכם יישארו אנונמיים, ולא יימסרו לאף אחד.
+            </h3>
+            <h4>
+                במסגרת המחקר תתבקשו לענות על מטלת פלקר, שתערך כ-6 דקות, מטלה המודדת מהירות תגובה ודיוק.
+                בכל פעם תופיע בפניכם טבלה עם 9 אותיות, עליכם לאתר את האות שנמצאת במרכז הטבלה, היכן שהופיע קודם סימן ה+, וכשתתבקשו, ליחצו עליה.
 
-                <div ng-if="!details.mobile">
-                    <iframe width="100%" height="600px" src="https://www.youtube.com/embed/1LbZOdZSN0k" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                 </div>
+            </h4>
+            <h4>
+                תגובה מהירה ונכונה, תזכה אתכם בניקוד גבוה ותצמצם את מספר הסבבים עליהם תצטרכו לענות.
+                תגובה נכונה, גם אם לא מהירה- תזכה אתכם בניקוד.
 
-                <div ng-if="details.mobile">
-                    <iframe width="100%" height="400px" src="https://www.youtube.com/embed/DTWHEzW2ItA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                תגובה שגויה, תוסיף לכם סבב למניין הסבבים עליהם תתבקשו לענות.
 
-                </div>
+            </h4>
+
+            <h1>
+                בכל פעם שתראו את האות:
+                {{rounds[0].flanker}}
+                לחצו על האות
+                {{rightButton}}
+
+                בכל פעם שתראו את האות
+                {{rounds[0].target}}
+                לחצו על האות
+                {{leftButton}}
+
+            </h1>
+
+
+            <h3>
+                תודה רבה על הסכמתכם להשתתף במחקר!
+            </h3>
+
+
 
 
                 <button  class="btn btn-primary btn-block" type="submit"  value="Submit" ng-click="startGame()" style="font-size: 2em">מוכנים? התחילו!</button>
@@ -133,8 +163,8 @@
                         <div style="text-align: center; font-size: 6vw; color: white" >  הקלידו את תשובתכם </div>
                         <div class="btn-group" style=" text-align: center; display: inline-block;  font-size: 4em; width: 100%; margin-bottom: 10%" >
 
-                            <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " >M</button>
-                            <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " >N</button>
+                            <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " >{{rightButton}}</button>
+                            <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " >{{leftButton}}</button>
 
                         </div>
 
@@ -175,8 +205,8 @@
                         <div style="text-align: center; font-size: 6vw; color: white" >  הקלידו את תשובתכם </div>
                         <div class="btn-group" style=" text-align: center; display: inline-block;  font-size: 4em; width: 100%; margin-bottom: 10%" >
 
-                            <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " >M</button>
-                            <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " >N</button>
+                            <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " >{{rightButton}}</button>
+                            <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " >{{leftButton}}</button>
 
                         </div>
                     </div>
@@ -219,8 +249,8 @@
 
                     <div class="btn-group" style=" text-align: center; display: inline-block;  font-size: 4em; width: 100%; margin-bottom: 10%" >
 
-                        <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b">M</button>
-                        <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b ">N</button>
+                        <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b">{{rightButton}}</button>
+                        <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b ">{{leftButton}}</button>
 
                     </div>
 
@@ -253,8 +283,8 @@
 
                         <div class="btn-group" style=" text-align: center; display: inline-block;  font-size: 4em; width: 100%; margin-bottom: 10%" >
 
-                            <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b">M</button>
-                            <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b ">N</button>
+                            <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b">{{rightButton}}</button>
+                            <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b ">{{leftButton}}</button>
 
                         </div>
 
@@ -301,8 +331,8 @@
                         <div style="text-align: center; font-size: 6vw;">  הקלידו את תשובתכם </div>
                         <div class="btn-group" style=" text-align: center; display: inline-block;  font-size: 4em; width: 100%; margin-bottom: 10%" >
 
-                            <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " ontouchstart="onTouchEvent('m')" >M</button>
-                            <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " ontouchstart="onTouchEvent('n')">N</button>
+                            <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " ontouchstart="onTouchEvent('m')" >{{rightButton}}</button>
+                            <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " ontouchstart="onTouchEvent('n')">{{leftButton}}</button>
 
                         </div>
                     </div>
@@ -336,8 +366,8 @@
                     <div style="text-align: center; font-size: 6vw;">  {{currentRound.message}} </div>
                     <div class="btn-group" style=" text-align: center; display: inline-block;  font-size: 4em; width: 100%; margin-bottom: 10%" >
 
-                        <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " ontouchstart="onTouchEvent('m')" >M</button>
-                        <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " ontouchstart="onTouchEvent('n')">N</button>
+                        <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " ontouchstart="onTouchEvent('m')" >{{rightButton}}</button>
+                        <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " ontouchstart="onTouchEvent('n')">{{leftButton}}</button>
 
                     </div>
                 </div>
@@ -485,6 +515,8 @@
             $scope.checkAgainTime=1000;
             $scope.rightMusic=new Audio('/voice/get.mp3');
             $scope.wrongMusic=new Audio('/voice/miss.mp3');
+            $scope.rightButton='N';
+            $scope.leftButton='M';
 
             $http.get('configParams').then(function(data) {
                 $scope.config=data.data;
@@ -496,6 +528,8 @@
                     $scope.answer=$scope.config.answer;
                     $scope.checkAgainTime=$scope.config.checkAgainTime;
                     $scope.rounds = $scope.config.rounds;
+                    $scope.rightButton=$scope.config.rightButton;
+                    $scope.leftButton=$scope.config.leftButton;
                 }
             });
 
@@ -504,6 +538,7 @@
             $scope.playError= function(){
                 $scope.wrongMusic.play();
             };
+
             $scope.playRight=function(){
                 $scope.rightMusic.play();
             };
@@ -686,7 +721,24 @@
             };
             $scope.startUpdate();
             forTouchPromise = function(someChar) {
-                $scope.addClicks(someChar);
+                var type='';
+                if($scope.details.mobile){
+                    if(someChar==='m'){
+                        type=$scope.rounds[0].flanker;
+                    }
+                    if(someChar=='n'){
+                        type=$scope.rounds[0].target;
+                    }
+                }
+                else {
+                    if(someChar==$scope.rightButton){
+                        type=$scope.rounds[0].flanker;
+                    }
+                    if(someChar==$scope.leftButton){
+                        type=$scope.rounds[0].target;
+                    }
+                }
+                $scope.addClicks(type);
                 $scope.$apply();
 
             };
