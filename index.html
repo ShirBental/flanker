@@ -650,13 +650,29 @@
                     return;
                 }
                 click={};
-                click.k= someChar;
+                var type=someChar;
+                if($scope.details.mobile){
+                    if(someChar==='m'){
+                        type=$scope.rounds[0].flanker;
+                    }
+                    else if(someChar=='n'){
+                        type=$scope.rounds[0].target;
+                    }
+                }
+                else {
+                    if(someChar==$scope.rightButton){
+                        type=$scope.rounds[0].flanker;
+                    }
+                    else if(someChar==$scope.leftButton){
+                        type=$scope.rounds[0].target;
+                    }
+                }
+                click.k= type;
                 click.timePress= new Date();
                 $scope.currentRound.clicks.push(click);
                 $scope.addMessage();
             };
             $scope.updateClicks= function(){
-
                 click= $scope.currentRound.clicks[ $scope.currentRound.clicks.length-1];
                 if(!click) return;
                 click.timeUp= new Date();
@@ -741,24 +757,7 @@
             };
             $scope.startUpdate();
             forTouchPromise = function(someChar) {
-                var type='';
-                if($scope.details.mobile){
-                    if(someChar==='m'){
-                        type=$scope.rounds[0].flanker;
-                    }
-                    if(someChar=='n'){
-                        type=$scope.rounds[0].target;
-                    }
-                }
-                else {
-                    if(someChar==$scope.rightButton){
-                        type=$scope.rounds[0].flanker;
-                    }
-                    if(someChar==$scope.leftButton){
-                        type=$scope.rounds[0].target;
-                    }
-                }
-                $scope.addClicks(type);
+                $scope.addClicks(someChar);
                 $scope.$apply();
 
             };
