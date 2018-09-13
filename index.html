@@ -90,18 +90,16 @@
             <h3>
                 שלום ותודה על הסכמתכם להשתתף במחקר, פרטיכם יישארו אנונמיים, ולא יימסרו לאף אחד.
             </h3>
+            <br>
             <h4>
                 במסגרת המחקר תתבקשו לענות על מטלת פלקר, שתערך כ-6 דקות, מטלה המודדת מהירות תגובה ודיוק.
                 בכל פעם תופיע בפניכם טבלה עם 9 אותיות, עליכם לאתר את האות שנמצאת במרכז הטבלה, היכן שהופיע קודם סימן ה+, וכשתתבקשו, ליחצו עליה.
 
             </h4>
             <h4>
-                תגובה מהירה ונכונה, תזכה אתכם בניקוד גבוה ותצמצם את מספר הסבבים עליהם תצטרכו לענות.
-                תגובה נכונה, גם אם לא מהירה- תזכה אתכם בניקוד.
-
-                תגובה שגויה, תוסיף לכם סבב למניין הסבבים עליהם תתבקשו לענות.
-
+                כל תגובה נכונה מהירה תזכה בפרס: תקבלו ניקוד המקצר את משך המטלה בסבב אחד. כל תגובה שגויה תפחית מהניקוד שלכם והמטלה  תתארך בסבב אחד
             </h4>
+            <br>
 
             <h1>
                 בכל פעם שתראו את האות:
@@ -120,11 +118,14 @@
             <h3>
                 תודה רבה על הסכמתכם להשתתף במחקר!
             </h3>
+            <div style="text-align: center">
+            <input type="checkbox"onclick="changeButton(true)"> <h1 style="display: inline-block; color: red"> קראתי והבנתי</h1><br>
+            </div>
 
 
 
 
-                <button  class="btn btn-primary btn-block" type="submit"  value="Submit" ng-click="startGame()" style="font-size: 2em">מוכנים? התחילו!</button>
+                <button id="startingButton" class="btn btn-primary btn-block" type="submit"  value="Submit" style="font-size: 2em" ng-click="startGame()"  disabled="" >לחצו להתחלה לאחר סימון כי קראתם את ההוראות</button>
 
 
         </div>
@@ -438,6 +439,19 @@
             $(document).bind('touchend',functionToActivate);
         };
 
+        function changeButton(bool) {
+            console.log("test");
+            var btn= $("#startingButton");
+            if(bool){
+                btn.removeAttr("disabled");
+            }
+            else {
+                btn.attr("disabled","disabled")
+            }
+
+
+        }
+
 
 
 
@@ -448,9 +462,11 @@
 
         var forTouchPromise;
 
+
         function onTouchEvent(someChar) {
             forTouchPromise(someChar);
-        }
+        };
+
 
         var isMobile = false; //initiate as false
         // device detection
@@ -517,6 +533,8 @@
             $scope.wrongMusic=new Audio('/voice/miss.mp3');
             $scope.rightButton='N';
             $scope.leftButton='M';
+            $scope.waitButtonText='';
+            $scope.waitingForButton=true;
 
             $http.get('configParams').then(function(data) {
                 $scope.config=data.data;
@@ -530,6 +548,7 @@
                     $scope.rounds = $scope.config.rounds;
                     $scope.rightButton=$scope.config.rightButton;
                     $scope.leftButton=$scope.config.leftButton;
+
                 }
             });
 
@@ -562,6 +581,7 @@
                 registerToKeyUp($scope.updateAnswer);
                 registerToTouchEnd($scope.updateAnswer);
             };
+
 
             $scope.detailsValidation=function(){
                 if($scope.details.gender!=null){
