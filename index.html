@@ -80,7 +80,7 @@
             </div>
             </div>
         </div>
-        <div class="container"  ng-if="!displayTest && !doneIt && explain">
+        <div class="container"  ng-if="!displayTest && !doneIt && explain" style="width: 100%; ; padding: 5% ">
                 <h1 style="text-align: center"><u> הוראות</u></h1>
                 <h3 style="text-align: center"> הפעילו את השמע במכשירכם</h3>
             <video  width="100%" controls >
@@ -100,20 +100,23 @@
                 כל תגובה נכונה מהירה תזכה בפרס: תקבלו ניקוד המקצר את משך המטלה בסבב אחד. כל תגובה שגויה תפחית מהניקוד שלכם והמטלה  תתארך בסבב אחד
             </h4>
             <br>
+            <div ng-if="!details.mobile">
 
-            <h1>
-                בכל פעם שתראו את האות:
-                {{rounds[0].flanker}}
-                לחצו על האות
-                {{rightButton}}
+                <h1>
+                    בכל פעם שתראו את האות:
+                    {{rounds[0].flanker}}
+                    לחצו על האות
+                    {{rightButton}}
 
-                בכל פעם שתראו את האות
-                {{rounds[0].target}}
-                לחצו על האות
-                {{leftButton}}
+                    בכל פעם שתראו את האות
+                    {{rounds[0].target}}
+                    לחצו על האות
+                    {{leftButton}}
 
-            </h1>
+                </h1>
 
+
+            </div>
 
             <h3>
                 תודה רבה על הסכמתכם להשתתף במחקר!
@@ -122,10 +125,7 @@
             <input type="checkbox"onclick="changeButton(true)"> <h1 style="display: inline-block; color: red"> קראתי והבנתי</h1><br>
             </div>
 
-
-
-
-                <button id="startingButton" class="btn btn-primary btn-block" type="submit"  value="Submit" style="font-size: 2em" ng-click="startGame()"  disabled="" >לחצו להתחלה לאחר סימון כי קראתם את ההוראות</button>
+                <button id="startingButton" class="btn btn-primary btn-block" type="submit"  value="Submit" style="font-size: 2em" ng-click="startGame()"  disabled="" >לחצו להתחלה </button>
 
 
         </div>
@@ -164,8 +164,8 @@
                         <div style="text-align: center; font-size: 6vw; color: white" >  הקלידו את תשובתכם </div>
                         <div class="btn-group" style=" text-align: center; display: inline-block;  font-size: 4em; width: 100%; margin-bottom: 10%" >
 
-                            <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " >{{rightButton}}</button>
-                            <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " >{{leftButton}}</button>
+                            <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " >{{rounds[0].flanker}}</button>
+                            <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " >{{rounds[0].target}}</button>
 
                         </div>
 
@@ -206,8 +206,8 @@
                         <div style="text-align: center; font-size: 6vw; color: white" >  הקלידו את תשובתכם </div>
                         <div class="btn-group" style=" text-align: center; display: inline-block;  font-size: 4em; width: 100%; margin-bottom: 10%" >
 
-                            <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " >{{rightButton}}</button>
-                            <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " >{{leftButton}}</button>
+                            <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " >{{rounds[0].flanker}}</button>
+                            <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " >{{rounds[0].target}}</button>
 
                         </div>
                     </div>
@@ -250,8 +250,8 @@
 
                     <div class="btn-group" style=" text-align: center; display: inline-block;  font-size: 4em; width: 100%; margin-bottom: 10%" >
 
-                        <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b">{{rightButton}}</button>
-                        <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b ">{{leftButton}}</button>
+                        <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b">{{rounds[0].flanker}}</button>
+                        <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b ">{{rounds[0].target}}</button>
 
                     </div>
 
@@ -284,8 +284,8 @@
 
                         <div class="btn-group" style=" text-align: center; display: inline-block;  font-size: 4em; width: 100%; margin-bottom: 10%" >
 
-                            <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b">{{rightButton}}</button>
-                            <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b ">{{leftButton}}</button>
+                            <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b">{{rounds[0].flanker}}</button>
+                            <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b ">{{rounds[0].target}}</button>
 
                         </div>
 
@@ -332,8 +332,8 @@
                         <div style="text-align: center; font-size: 6vw;">  הקלידו את תשובתכם </div>
                         <div class="btn-group" style=" text-align: center; display: inline-block;  font-size: 4em; width: 100%; margin-bottom: 10%" >
 
-                            <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " ontouchstart="onTouchEvent('m')" >{{rightButton}}</button>
-                            <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " ontouchstart="onTouchEvent('n')">{{leftButton}}</button>
+                            <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " ontouchstart="onTouchEvent('right')" >{{rounds[0].flanker}}</button>
+                            <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " ontouchstart="onTouchEvent('left')">{{rounds[0].target}}</button>
 
                         </div>
                     </div>
@@ -367,8 +367,8 @@
                     <div style="text-align: center; font-size: 6vw;">  {{currentRound.message}} </div>
                     <div class="btn-group" style=" text-align: center; display: inline-block;  font-size: 4em; width: 100%; margin-bottom: 10%" >
 
-                        <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " ontouchstart="onTouchEvent('m')" >{{rightButton}}</button>
-                        <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " ontouchstart="onTouchEvent('n')">{{leftButton}}</button>
+                        <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " ontouchstart="onTouchEvent('right')" >{{rounds[0].flanker}}</button>
+                        <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " ontouchstart="onTouchEvent('left')">{{rounds[0].target}}</button>
 
                     </div>
                 </div>
@@ -535,6 +535,8 @@
             $scope.leftButton='M';
             $scope.waitButtonText='';
             $scope.waitingForButton=true;
+            $scope.mobileButtonRight=$scope.rounds[0].target;
+            $scope.mobileButtonLeft=$scope.rounds[0].flanker;
 
             $http.get('configParams').then(function(data) {
                 $scope.config=data.data;
@@ -651,19 +653,19 @@
                 }
                 click={};
                 var type=someChar;
-                if($scope.details.mobile){
-                    if(someChar==='m'){
-                        type=$scope.rounds[0].flanker;
-                    }
-                    else if(someChar=='n'){
-                        type=$scope.rounds[0].target;
-                    }
-                }
-                else {
+                if(!$scope.details.mobile){
                     if(someChar==$scope.rightButton){
                         type=$scope.rounds[0].flanker;
                     }
                     else if(someChar==$scope.leftButton){
+                        type=$scope.rounds[0].target;
+                    }
+                }
+                else {
+                    if(someChar=='right'){
+                        type=$scope.rounds[0].flanker;
+                    }
+                    else {
                         type=$scope.rounds[0].target;
                     }
                 }
@@ -757,6 +759,7 @@
             };
             $scope.startUpdate();
             forTouchPromise = function(someChar) {
+
                 $scope.addClicks(someChar);
                 $scope.$apply();
 
