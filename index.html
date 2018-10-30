@@ -336,9 +336,11 @@
                             <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " ontouchstart="onTouchEvent('left')">{{rounds[0].target}}</button>
 
                         </div>
+                    <div style="text-align: center; font-size: 6vw; color: red">  {{overTimeText}} </div>
                     </div>
                 <div ng-if="details.mobile==false"  >
                     <div style="text-align: center; font-size: 8vw">  הקלידו את תשובתכם </div>
+                    <div style="text-align: center; font-size: 6vw; color: red">  {{overTimeText}} </div>
 
                 </div>
 
@@ -364,7 +366,7 @@
                             {{currentRound.flanker}}</a>
 
                     </div>
-                    <div style="text-align: center; font-size: 6vw; color: black">  {{currentRound.message}} </div>
+                    <div style="text-align: center; font-size: 6vw; color: red">  {{currentRound.message}} </div>
                     <div class="btn-group" style=" text-align: center; display: inline-block;  font-size: 4em; width: 100%; margin-bottom: 10%" >
 
                         <button style="padding: 15px;  border-radius: 15px; box-shadow: 0 10px #4e555b  " ontouchstart="onTouchEvent('right')" >{{rounds[0].flanker}}</button>
@@ -373,7 +375,7 @@
                     </div>
                 </div>
                 <div ng-if="details.mobile==false">
-                    {{currentRound.message}}
+                    <div style="text-align: center; font-size: 6vw; color: red">  {{currentRound.message}} </div>
                 </div>
 
             </div>
@@ -522,6 +524,8 @@
             $scope.roundNum=0;
             $scope.fasterText="הגבירו מהירות!";
             $scope.speedupTime=2000;
+            $scope.overTimeText="";
+            $scope.timeAlert=500;
 
             $scope.initTime=500;
             $scope.flankerTime=500;
@@ -550,6 +554,7 @@
                     $scope.rounds = $scope.config.rounds;
                     $scope.rightButton=$scope.config.rightButton;
                     $scope.leftButton=$scope.config.leftButton;
+                    $scope.timeAlert=$scope.config.timeAlert;
 
                 }
             });
@@ -642,7 +647,7 @@
             $scope.addMessage= function(){
                 var now=  new Date();
                 console.log(now-$scope.currentRound.startTime);
-                if(now-$scope.currentRound.startTime>$scope.speedupTime){
+                if(now-$scope.currentRound.startTime>$scope.answer){
                     $scope.currentRound.message=$scope.fasterText;
                 }
             };
@@ -696,7 +701,13 @@
                     $scope.res=true;
                     console.log($scope.details.size);
                     $scope.currentRound.status='flanker';
-                    $timeout($scope.updateStatus,$scope.initTime);
+                    if($scope.mobile){
+                        $timeout($scope.updateStatus,$scope.initTime/10)
+                    }
+                    else {
+                        $timeout($scope.updateStatus,$scope.initTime);
+                    }
+
                 }
                 else if($scope.currentRound.status=='flanker'){
                     $scope.currentRound.status='wait';
@@ -712,8 +723,10 @@
                     $timeout($scope.updateStatus,$scope.targetTime);
                 }
                 else if($scope.currentRound.status=='answer'){
+                    $timeout($scope.overTimeText=$scope.fasterText, $scope.timeAlert);
                     if ($scope.currentRound.clicks.length>0) {
                         $scope.currentRound.status='done';
+                        $scope.overTimeText="";
                         $timeout($scope.updateStatus,$scope.answer);
                     }
                     else {
