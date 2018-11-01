@@ -336,11 +336,11 @@
                             <button style="padding: 15px;  border-radius: 15px;  box-shadow: 0 10px #4e555b " ontouchstart="onTouchEvent('left')">{{rounds[0].target}}</button>
 
                         </div>
-                    <div style="text-align: center; font-size: 6vw; color: red">  {{overTimeText}} </div>
+                    <div style="text-align: center; font-size: 6vw; color: red">  {{timeOverText}} </div>
                     </div>
                 <div ng-if="details.mobile==false"  >
                     <div style="text-align: center; font-size: 8vw">  הקלידו את תשובתכם </div>
-                    <div style="text-align: center; font-size: 6vw; color: red">  {{overTimeText}} </div>
+                    <div style="text-align: center; font-size: 6vw; color: red">  {{timeOverText}} </div>
 
                 </div>
 
@@ -442,7 +442,6 @@
         };
 
         function changeButton(bool) {
-            console.log("test");
             var btn= $("#startingButton");
             if(bool){
                 btn.removeAttr("disabled");
@@ -524,8 +523,8 @@
             $scope.roundNum=0;
             $scope.fasterText="הגבירו מהירות!";
             $scope.speedupTime=2000;
-            $scope.overTimeText="";
             $scope.timeAlert=500;
+            $scope.timeOverText='';
 
             $scope.initTime=500;
             $scope.flankerTime=500;
@@ -554,7 +553,7 @@
                     $scope.rounds = $scope.config.rounds;
                     $scope.rightButton=$scope.config.rightButton;
                     $scope.leftButton=$scope.config.leftButton;
-                    $scope.timeAlert=$scope.config.timeAlert;
+                    $scope.timeAlert=$scope.config.timeAlertConfig;
 
                 }
             });
@@ -570,7 +569,6 @@
             };
 
             $scope.formSubmit= function () {
-              console.log($scope.details);
               $scope.detailsValidation();
 
             };
@@ -618,7 +616,6 @@
                 }
             }
             $scope.addNewRound=function () {
-                console.log("addNewRound",$scope.roundNum,$scope.currentRound);
 
                 if ($scope.rounds[$scope.roundNum].status!='done') {
                     if ($scope.currentRound && ($scope.rounds[$scope.roundNum]!=$scope.currentRound)) {
@@ -646,7 +643,6 @@
             };
             $scope.addMessage= function(){
                 var now=  new Date();
-                console.log(now-$scope.currentRound.startTime);
                 if(now-$scope.currentRound.startTime>$scope.answer){
                     $scope.currentRound.message=$scope.fasterText;
                 }
@@ -684,7 +680,6 @@
                 if(!click) return;
                 click.timeUp= new Date();
                 click.timePressed = click.timeUp-click.timePress;
-                console.log($scope.currentRound.clicks);
             };
             $scope.getAnswer= function(e) {
                 $scope.addClicks(String.fromCharCode(e.keyCode));
@@ -694,12 +689,15 @@
                 $scope.updateClicks();
                 $scope.$apply();
             };
+            $scope.addTextFaster=function(){
+              $scope.timeOverText=$scope.fasterText;
+              console.log("FasterText");
+            };
+
 
             $scope.updateStatus=function(){
-                console.log("updating status for:",$scope.roundNum,$scope.currentRound.status);
                 if($scope.currentRound.status=='init'){
                     $scope.res=true;
-                    console.log($scope.details.size);
                     $scope.currentRound.status='flanker';
                     if($scope.mobile){
                         $timeout($scope.updateStatus,$scope.initTime/10)
@@ -721,12 +719,19 @@
                     $scope.currentRound.status='answer';
                     $scope.currentRound.startTime=new Date();
                     $timeout($scope.updateStatus,$scope.targetTime);
+                    $scope.waitingForAns=false;
                 }
                 else if($scope.currentRound.status=='answer'){
-                    $timeout($scope.overTimeText=$scope.fasterText, $scope.timeAlert);
+                    if(!$scope.waitingForAns){
+                        $scope.waitingForAns=true;
+                        var f=function(){
+                            $scope.addTextFaster();
+                        };
+                        $scope.textTimeOut = $timeout(f,$scope.timeAlert);
+                    }
                     if ($scope.currentRound.clicks.length>0) {
                         $scope.currentRound.status='done';
-                        $scope.overTimeText="";
+
                         $timeout($scope.updateStatus,$scope.answer);
                     }
                     else {
@@ -734,6 +739,13 @@
                     }
                 }
                 else if($scope.currentRound.status=='done'){
+                    if($scope.textTimeOut!==undefined){
+                        $timeout.cancel($scope.textTimeOut);
+                        $scope.textTimeOut=undefined;
+                        $scope.timeOverText='';
+                        console.log("done");
+                    }
+
                     if ($scope.currentRound.clicks.length>0) {
                         var lastClick = $scope.currentRound.clicks[$scope.currentRound.clicks.length-1];
                         var pointToAdd=Math.round(($scope.speedupTime- ($scope.currentRound.clicks[ $scope.currentRound.clicks.length-1].timePress.getTime()-$scope.currentRound.startTime.getTime()))/1000);
@@ -741,10 +753,10 @@
                             $scope.score=0;
                             $scope.mistakes=0;
                         }
-                        console.log("*****point to add"+pointToAdd)
                         $scope.previousScore=$scope.score;
                         if (lastClick.k.toLowerCase()==$scope.currentRound.target.toLowerCase()) {
                             $scope.playRight();
+
                             $scope.res=true;
                             if(pointToAdd<=0){
                                 $scope.score=$scope.score+1;
