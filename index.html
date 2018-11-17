@@ -672,14 +672,17 @@
                 }
                 click.k= type;
                 click.timePress= new Date();
-                $scope.currentRound.clicks.push(click);
-                $scope.addMessage();
+                $scope.currentRound.currClick = click;
+
             };
             $scope.updateClicks= function(){
-                click= $scope.currentRound.clicks[ $scope.currentRound.clicks.length-1];
+                click= $scope.currentRound.currClick;
+                $scope.currentRound.currClick=undefined;
                 if(!click) return;
                 click.timeUp= new Date();
                 click.timePressed = click.timeUp-click.timePress;
+                $scope.currentRound.clicks.push(click);
+                $scope.addMessage();
             };
             $scope.getAnswer= function(e) {
                 $scope.addClicks(String.fromCharCode(e.keyCode));
