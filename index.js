@@ -69,7 +69,6 @@ var loadConfig=function() {
 
         }
     });
-
 };
 loadConfig();
 
@@ -78,11 +77,6 @@ var writeToFile=function(req,res) {
     console.log(req,res);
     console.log(req.body);
     var output=req.body;
-
-    //"test":[{"startTime":"2018-08-18T19:00:00.352Z","target":"H","flanker":"R","status":"done","message":"מהרו!","reAction":false,
-    //"test":[{"startTime":"2018-08-18T19:00:00.352Z","target":"H","flanker":"R","status":"done","message":"מהרו!","reAction":false,
-    // "clicks":[{"k":"h","timePress":"2018-08-18T19:00:07.188Z","timeUp":"2018-08-18T19:00:10.045Z","timePressed":2857},{"k":"h","timePress":"2018-08-18T19:00:10.133Z"}]},
-    // {"startTime":"2018-08-18T19:00:00.352Z","target":"H","flanker":"R","status":"done","message":"מהרו!","reAction":false,"clicks":[{"k":"h","timePress":"2018-08-18T19:00:10.339Z","timeUp":"2018-08-18T19:00:10.461Z","timePressed":122},{"k":"h","timePress":"2018-08-18T19:00:10.493Z"}]},{"startTime":"2018-08-18T19:00:00.352Z","target":"H","flanker":"R","status":"done","message":"מהרו!","reAction":false,"clicks":[{"k":"h","timePress":"2018-08-18T19:00:14.194Z"}]}]}
     finalString = "";
     finalString += output.demographic_details.mobile + ',';
     finalString += output.demographic_details.gender + ',';
@@ -110,14 +104,11 @@ var writeToFile=function(req,res) {
         }
     }
     finalString += 'End of data';
-
-    //fs.appendFile(resFile, JSON.stringify(output)+'\n', function (err) {
     fs.appendFile(resFile, finalString+'\n', function (err) {
         if (err) throw err;
         console.log('Saved!');
     });
     res.send('OK');
-
 }
 
 express()
