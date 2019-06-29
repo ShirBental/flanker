@@ -1,10 +1,13 @@
-
+const MongoClient = require('mongodb').MongoClient;
 const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000
 const fs=require('fs');
-
+const url = 'mongodb://heroku_6k3mx0zf:g75e40stilmledp6bjcjepbm91@ds159782.mlab.com:59782/heroku_6k3mx0zf';
+const assert = require('assert');
+// Database Name
+const dbName = 'heroku_6k3mx0zf';
 
 var configParams = {
     initTime:500,
@@ -50,34 +53,46 @@ function writeConfig() {
 function setConfig(req,res) {
     console.log("in set config");
     configParams=req.body;
-    writeConfig();
+    MongoClient.connect(url, function(err, client) {
+        assert.equal(null, err);
+        console.log("Connected successfully to server");
+
+        const db = client.db(dbName);
+        const collection = db.collection('configParams');
+        collection.remove({},function(err,result) {
+            collection.insert(configParams, function (err, result) {
+                console.log(err, result);
+                client.close();
+            });
+        });
+    });
     res.send('OK');
 };
+MongoClient.connect(url, function(err, client) {
+    assert.equal(null, err);
+    console.log("Connected successfully to server");
 
-var loadConfig=function() {
-    fs.readFile(configFile,function(err,data) {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            try {
-                configParams = JSON.parse(data);
-            }
-            catch(err) {
-                console.log('Failed loading JSON', err);
-            }
+    const db = client.db(dbName);
+    const collection = db.collection('configParams');
+    collection.find({}).toArray(function (err,result) {
+        configParams=result[0];
+        client.close();
+    })
+    /*collection.insertMany([configParams],function (err,result) {
+        console.log(result,err);
+        client.close();
+    })*/
 
-        }
-    });
-};
-loadConfig();
+});
+
+
 
 var resFile='data.csv';
 var writeToFile=function(req,res) {
     console.log(req,res);
     console.log(req.body);
     var output=req.body;
-    finalString = "";
+    var finalString = "";
     finalString += output.demographic_details.mobile + ',';
     finalString += output.demographic_details.gender + ',';
     finalString += output.demographic_details.age + ',';
@@ -104,9 +119,22 @@ var writeToFile=function(req,res) {
         }
     }
     finalString += 'End of data';
-    fs.appendFile(resFile, finalString+'\n', function (err) {
-        if (err) throw err;
-        console.log('Saved!');
+
+    MongoClient.connect(url, function(err, client) {
+        assert.equal(null, err);
+        console.log("Connected successfully to server");
+
+        const db = client.db(dbName);
+        const collection = db.collection('flankerResults');
+        collection.insert({results:finalString},function(err,result) {
+            console.log('inserted',finalString,err,result);
+            client.close();
+        });
+        /*collection.insertMany([configParams],function (err,result) {
+            console.log(result,err);
+            client.close();
+        })*/
+
     });
     res.send('OK');
 }
@@ -123,10 +151,32 @@ express()
     })
     .post('/configParams', (req, res) => setConfig(req,res))
     .get('/download', function(req, res){
-        res.download(resFile);
+        MongoClient.connect(url, function(err, client) {
+            assert.equal(null, err);
+            console.log("Connected successfully to server");
+
+            const db = client.db(dbName);
+            const collection = db.collection('flankerResults');
+            var answerCsv = 'Mobile,Gender,ID,IP,ADHD,Education,Resolution,Start rounds\n';
+            collection.find({}).toArray(function (err,result) {
+                for(var i=0; i<result.length; i++) {
+                    if(result[i].results)
+                        answerCsv = answerCsv + result[i].results + '\n';
+                }
+                console.log(answerCsv);
+                res.set({"Content-Disposition":"attachment; filename=\"data.csv\""});
+                res.send(answerCsv);
+
+                client.close();
+
+            });
+
+        });
+
     })
     .get('/downloadParams', function(req, res){
-        res.download(configFile);
+        res.set({"Content-Disposition":"attachment; filename=\"flankerConfig.json\""});
+        res.send(configParams);
     })
   .post('/results', (req, res) => writeToFile(req,res))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
